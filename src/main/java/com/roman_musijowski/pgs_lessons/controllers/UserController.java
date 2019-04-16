@@ -25,31 +25,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    //    @RequestMapping({"/list", "/"})
-//    public String listStudents(Model model){
-//        model.addAttribute("students", userService.listAll());
-//        return "user/list";
-//    }
-
-//    @RequestMapping("/edit/{id}")
-//    public String edit(@PathVariable Long id, Model model){
-//
-//        User user = userService.getById(id);
-//
-//        UserForm studentForm = new UserForm();
-//
-//        studentForm.setStudent_id(user.getStudent_id());
-//        studentForm.setName(user.getName());
-//        studentForm.setSurName(user.getSurName());
-//        studentForm.setEmail(user.getEmail());
-//        studentForm.setYearOfStudies(user.getYearOfStudies());
-//        studentForm.setFieldOfStudy(user.getFieldOfStudy());
-//        studentForm.setIndex(user.getIndex());
-//
-//        model.addAttribute("user", studentForm);
-//        return "user/studentForm";
-//    }
-
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("userForm", userService.getById(id));
@@ -72,7 +47,7 @@ public class UserController {
 
         return "redirect:user/show/" + newUser.getId();
     }
-//////////////////////////////////////
+
     @RequestMapping("/show/{id}")
     public String showUser(@PathVariable Long id, Model model){
         model.addAttribute("user", userService.getById(id));

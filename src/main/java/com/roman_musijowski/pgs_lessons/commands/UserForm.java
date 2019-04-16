@@ -30,7 +30,7 @@ public class UserForm {
     private String index;
 
     private String password;
-    private String confirmPassword;
+    private String encryptedPassword;
 
     //add list of lessons
 
@@ -99,11 +99,11 @@ public class UserForm {
         this.password = password;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
     }
 }

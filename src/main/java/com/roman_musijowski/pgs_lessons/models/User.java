@@ -1,6 +1,7 @@
 package com.roman_musijowski.pgs_lessons.models;
 
 import com.roman_musijowski.pgs_lessons.models.security.Role;
+import org.thymeleaf.standard.expression.Each;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class User {
     private String password;
     private String encryptedPassword;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<Role> roles = new ArrayList<>();
@@ -136,6 +137,21 @@ public class User {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public void addRole(Role role){
+        if(!this.roles.contains(role)){
+            this.roles.add(role);
+        }
+
+        if(!role.getUsers().contains(this)){
+            role.getUsers().add(this);
+        }
+    }
+
+    public void removeRole(Role role){
+        this.roles.remove(role);
+        role.getUsers().remove(this);
     }
 
     @Override

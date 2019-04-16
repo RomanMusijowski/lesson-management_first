@@ -41,6 +41,14 @@ public class Role {
         this.name = name;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     public void addUser(User user){
         if(!this.users.contains(user)){
             this.users.add(user);
