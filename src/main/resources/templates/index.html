@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Core Online Tutorial - List Customers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+                th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link href="../../../static/css/spring-core.css"
+          th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
+</head>
+<body>
+<!--...-->
+<!--<div th:replace="fragments/header :: header">-->
+<!--    &lt;!&ndash; ============================================================================ &ndash;&gt;-->
+<!--    &lt;!&ndash; This content is only used for static prototyping purposes (natural templates)&ndash;&gt;-->
+<!--    &lt;!&ndash; and is therefore entirely optional, as this markup fragment will be included &ndash;&gt;-->
+<!--    &lt;!&ndash; from "fragments/header.html" at runtime.                                     &ndash;&gt;-->
+<!--    &lt;!&ndash; ============================================================================ &ndash;&gt;-->
+<!--    <div class="navbar navbar-inverse navbar-fixed-top">-->
+<!--        <div class="container">-->
+<!--            <div class="navbar-header">-->
+<!--                <a class="navbar-brand" href="#">PGS</a>-->
+<!--            </div>-->
+<!--            <div class="navbar-collapse collapse">-->
+<!--                <ul class="nav navbar-nav">-->
+<!--                    <li class="active"><a href="administrator/listOfLessons">Lessons</a></li>-->
+<!--                </ul>-->
+<!--                <ul class="nav navbar-nav">-->
+<!--                    <li class="active"><a href="administrator/listOfStudents">Students</a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<div class="container">
+    <h1>Witam smieciu</h1>
+
+    <h2>This is my Thymeleaf index page.</h2>
+
+    <ul>
+        <li><a href="lesson/list">Lessons</a></li>
+        <li><a href="user/list">Students</a></li>
+    </ul>
+
+</div>
+</body>
+</html>
