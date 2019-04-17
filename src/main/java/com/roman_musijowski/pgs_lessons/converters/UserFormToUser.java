@@ -1,13 +1,11 @@
 package com.roman_musijowski.pgs_lessons.converters;
 
 import com.roman_musijowski.pgs_lessons.commands.UserForm;
-import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.models.User;
-import com.roman_musijowski.pgs_lessons.models.security.Role;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+
 
 @Component
 public class UserFormToUser implements Converter<UserForm, User> {
@@ -20,7 +18,7 @@ public class UserFormToUser implements Converter<UserForm, User> {
 //        user.setRoles(new Role());
 //        user.setLessons(lessons);
         user.setId(userForm.getId());
-        user.setEmail(userForm.getEmail());
+        user.setUserName(userForm.getUserName());
         user.setName(userForm.getName());
         user.setSurName(userForm.getSurName());
         user.setFieldOfStudy(userForm.getFieldOfStudy());

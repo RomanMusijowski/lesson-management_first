@@ -1,9 +1,7 @@
 package com.roman_musijowski.pgs_lessons.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "lessons")
@@ -23,7 +21,7 @@ public class Lesson {
     private String teacherInfo;
 
     @ManyToMany(mappedBy = "lessons")
-    private List<User> users = new ArrayList<>();
+    private Set<User> users = new HashSet<>();
 
     public Lesson() {
     }
@@ -52,11 +50,20 @@ public class Lesson {
         this.description = description;
     }
 
-    public List<User> getUsers() {
+//    public List<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
+
+
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
@@ -88,7 +95,7 @@ public class Lesson {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", teacherInfo='" + teacherInfo + '\'' +
-                ", users=" + users +
+//                ", users=" + users +
                 '}';
     }
 }

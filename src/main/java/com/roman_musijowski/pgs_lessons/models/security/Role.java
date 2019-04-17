@@ -1,12 +1,8 @@
 package com.roman_musijowski.pgs_lessons.models.security;
 
 import com.roman_musijowski.pgs_lessons.models.User;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "roles")
@@ -17,11 +13,12 @@ public class Role {
     private Integer role_id;
 
     @Column(name = "name")
-    private String name;
+    private String role;
 
 //    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "role",fetch = FetchType.EAGER)
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<User> users= new ArrayList<>();
+    private Set<User> users= new HashSet<>();
+//    private List<User> users= new ArrayList<>();
 
     public Role() { }
 
@@ -33,19 +30,28 @@ public class Role {
         this.role_id = role_id;
     }
 
-    public String getName() {
-        return name;
+    public String getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public List<User> getUsers() {
+//    public List<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
+
+
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
@@ -82,8 +88,8 @@ public class Role {
     public String toString() {
         return "Role{" +
                 "role_id=" + role_id +
-                ", name='" + name + '\'' +
-                ", users=" + users +
+                ", role='" + role + '\'' +
+//                ", users=" + users +
                 '}';
     }
 }

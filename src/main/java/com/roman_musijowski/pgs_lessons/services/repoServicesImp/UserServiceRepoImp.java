@@ -5,6 +5,7 @@ import com.roman_musijowski.pgs_lessons.converters.UserFormToUser;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.repositories.UserRepository;
 import com.roman_musijowski.pgs_lessons.services.UserService;
+import com.roman_musijowski.pgs_lessons.services.security.EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +18,13 @@ public class UserServiceRepoImp implements UserService {
 
     private UserRepository userRepository;
     private UserFormToUser userFormToUser;
+    private EncryptionService encryptionService;
 
     @Autowired
-    public UserServiceRepoImp(UserRepository userRepository, UserFormToUser userFormToUser) {
+    public UserServiceRepoImp(UserRepository userRepository, UserFormToUser userFormToUser, EncryptionService encryptionService) {
         this.userRepository = userRepository;
         this.userFormToUser = userFormToUser;
+        this.encryptionService = encryptionService;
     }
 
     @Override
@@ -39,6 +42,12 @@ public class UserServiceRepoImp implements UserService {
 
     @Override
     public User saveOrUpdate(User object) {
+//        System.out.println("Save or update - "+object.toString());
+        if(object.getPassword() != null){
+            object.setEncryptedPassword(encryptionService.encryptString(object.getPassword()));
+        }
+
+//        System.out.println("Save or update(encrypt) - "+object.toString());
         return userRepository.save(object);
     }
 
@@ -62,11 +71,23 @@ public class UserServiceRepoImp implements UserService {
 
         User newUser = userFormToUser.convert(userForm);
 
-        if (newUser.getId() != null){
+        if (newUser.getId() != null) {
             User existingUser = getById(newUser.getId());
 
-//            newUser.setEnable(existingUser.isEnable());
+            newUser.setEnabled(existingUser.getEnabled());
         }
         return saveOrUpdate(newUser);
     }
+
+    @Override
+    public User findByUserName(String userName) {
+        return userRepository.findByUserName(userName);
+    }
+
+
+//    @Override
+//    public User findByEmail(String email) {
+//        return userRepository.findByEmail(email);
+//    }
+
 }

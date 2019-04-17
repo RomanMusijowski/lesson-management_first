@@ -1,38 +1,38 @@
 package com.roman_musijowski.pgs_lessons.commands;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class UserForm {
 
     private Long id;
-    @NotNull
-    @Email
-    private String email;
+    @NotEmpty
+    private String userName;
 
-    @NotNull
+    @NotEmpty
     @Size(min = 2, max = 36)
     private String name;
 
-    @NotNull
+    @NotEmpty
     @Size(min = 2, max = 36)
     private String surName;
 
+    //??????????????Size for Integer
     @NotNull
+    @Min(0)
     private Integer yearOfStudies;
 
-    @NotNull
+    @NotEmpty
+    @Size(min = 5, max = 36)
     private String fieldOfStudy;
 
-    @NotNull
+    @NotEmpty
     @Size(min = 11, max = 11)
     private String index;
 
     private String password;
-    private String encryptedPassword;
+    private String passwordTextConf;
 
-    //add list of lessons
+//    private List<Lesson> lessons = new ArrayList<>();
 
 
     public Long getId() {
@@ -43,12 +43,12 @@ public class UserForm {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getName() {
@@ -99,11 +99,19 @@ public class UserForm {
         this.password = password;
     }
 
-    public String getEncryptedPassword() {
-        return encryptedPassword;
+    public String getPasswordTextConf() {
+        return passwordTextConf;
     }
 
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
+    public void setPasswordTextConf(String passwordTextConf) {
+        this.passwordTextConf = passwordTextConf;
     }
+
+    //    public List<Lesson> getLessons() {
+//        return lessons;
+//    }
+//
+//    public void setLessons(List<Lesson> lessons) {
+//        this.lessons = lessons;
+//    }
 }

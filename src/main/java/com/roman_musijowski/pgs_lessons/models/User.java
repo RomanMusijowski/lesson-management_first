@@ -1,12 +1,11 @@
 package com.roman_musijowski.pgs_lessons.models;
 
 import com.roman_musijowski.pgs_lessons.models.security.Role;
-import org.thymeleaf.standard.expression.Each;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import java.util.*;
 
 @Entity
 @Table(name = "students")
@@ -16,8 +15,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "userName")
+    private String userName;
 
     @Column(name = "name")
     private String name;
@@ -36,27 +35,41 @@ public class User {
 
     @Transient
     private String password;
+    @NotNull
+    @Length(max = 100)
     private String encryptedPassword;
+
+    private Boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<Role> roles = new ArrayList<>();
+    private Set<Role> roles = new HashSet<>();
+//    private List<Role> roles = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "student_lesson",
         joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "lesson_id"))
-    private List<Lesson> lessons = new ArrayList<>();
+    private Set<Lesson> lessons = new HashSet<>();
+//    private List<Lesson> lessons = new ArrayList<>();
 
     public User() { }
 
-    public String getEmail() {
-        return email;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getName() {
@@ -107,13 +120,13 @@ public class User {
         this.password = password;
     }
 
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
-    }
+//    public List<Lesson> getLessons() {
+//        return lessons;
+//    }
+//
+//    public void setLessons(List<Lesson> lessons) {
+//        this.lessons = lessons;
+//    }
 
     public Long getId() {
         return id;
@@ -131,13 +144,29 @@ public class User {
         this.encryptedPassword = encryptedPassword;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public Set<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(Set<Lesson> lessons) {
+        this.lessons = lessons;
+    }
+
+    //    public List<Role> getRoles() {
+//        return roles;
+//    }
+//
+//    public void setRoles(List<Role> roles) {
+//        this.roles = roles;
+//    }
 
     public void addRole(Role role){
         if(!this.roles.contains(role)){
@@ -171,7 +200,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "user_id=" + id +
-                ", email='" + email + '\'' +
+                ", userName='" + userName + '\'' +
                 ", name='" + name + '\'' +
                 ", surName='" + surName + '\'' +
                 ", yearOfStudies=" + yearOfStudies +
@@ -179,8 +208,8 @@ public class User {
                 ", index='" + index + '\'' +
                 ", password='" + password + '\'' +
                 ", encryptedPassword='" + encryptedPassword + '\'' +
-                ", roles=" + roles +
-                ", lessons=" + lessons +
+//                ", roles=" + roles +
+//                ", lessons=" + lessons +
                 '}';
     }
 }

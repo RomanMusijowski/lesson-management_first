@@ -1,8 +1,5 @@
-package com.roman_musijowski.pgs_lessons.security;
+package com.roman_musijowski.pgs_lessons.services.security;
 
-/**
- * Created by jt on 12/14/15.
- */
 public interface EncryptionService {
     String encryptString(String input);
     boolean checkPassword(String plainPassword, String encryptedPassword);

@@ -3,9 +3,6 @@ package com.roman_musijowski.pgs_lessons.bootstrap;
 import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.models.security.Role;
-import com.roman_musijowski.pgs_lessons.repositories.LessonRepository;
-import com.roman_musijowski.pgs_lessons.repositories.RoleRepository;
-import com.roman_musijowski.pgs_lessons.repositories.UserRepository;
 import com.roman_musijowski.pgs_lessons.services.LessonService;
 import com.roman_musijowski.pgs_lessons.services.RoleSevice;
 import com.roman_musijowski.pgs_lessons.services.UserService;
@@ -38,6 +35,11 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         loadLesson();
         assignUsersToStudentRole();
         assignUsersToAdminRole();
+       findUsers();
+    }
+
+    private void findUsers(){
+        System.out.println(userService.findByUserName("admin@gmail.com").toString());
     }
 
     private void assignUsersToStudentRole() {
@@ -45,7 +47,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         List<User> users = (List<User>) userService.listAll();
 
         roles.forEach(role ->{
-            if(role.getName().equalsIgnoreCase("STUDENT")){
+            if(role.getRole().equalsIgnoreCase("STUDENT")){
                 users.forEach(user -> {
                     user.addRole(role);
                     userService.saveOrUpdate(user);
@@ -59,13 +61,13 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         List<User> users = (List<User>) userService.listAll();
 
 //        for (User user : users) {
-//            System.out.println(user.getEmail());
+//            System.out.println(user.getUserName());
 //        }
 
         roles.forEach(role ->{
-            if(role.getName().equalsIgnoreCase("ADMIN")){
+            if(role.getRole().equalsIgnoreCase("ADMIN")){
                 users.forEach(user -> {
-                    if (user.getEmail().equals("admin@gmail.com")) {
+                    if (user.getUserName().equals("admin@gmail.com")) {
                         user.addRole(role);
                         userService.saveOrUpdate(user);
                     }
@@ -76,18 +78,18 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
     private void loadRoles(){
         Role admin = new Role();
-        admin.setName("ADMIN");
+        admin.setRole("ADMIN");
         roleSevice.saveOrUpdate(admin);
 
         Role studen = new Role();
-        studen.setName("STUDENT");
+        studen.setRole("STUDENT");
         roleSevice.saveOrUpdate(studen);
     }
 //
     private void loadUsers(){
 
         User admin = new User();
-        admin.setEmail("admin@gmail.com");
+        admin.setUserName("admin@gmail.com");
         admin.setName("Roman");
         admin.setSurName("Musiiovskyi");
         admin.setFieldOfStudy("Informatyka");
@@ -98,7 +100,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         userService.saveOrUpdate(admin);
 
         User user = new User();
-        user.setEmail("pgnus@gmail.com");
+        user.setUserName("pgnus@gmail.com");
         user.setName("Piotr");
         user.setSurName("Gnus");
         user.setFieldOfStudy("Informatyka");
@@ -109,7 +111,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         userService.saveOrUpdate(user);
 
         User user2 = new User();
-        user2.setEmail("rushla@gmail.com");
+        user2.setUserName("rushla@gmail.com");
         user2.setName("Roman");
         user2.setSurName("Kushla");
         user2.setFieldOfStudy("Informatyka");
@@ -120,7 +122,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         userService.saveOrUpdate(user2);
 
         User user3 = new User();
-        user3.setEmail("plabuda@gmail.com");
+        user3.setUserName("plabuda@gmail.com");
         user3.setName("Pavlo");
         user3.setSurName("Labuda");
         user3.setFieldOfStudy("Informatyka");

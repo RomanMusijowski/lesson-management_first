@@ -1,14 +1,23 @@
 package com.roman_musijowski.pgs_lessons.commands;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class LessonForm {
 
     private Long lesson_id;
+
+    @NotEmpty
+    @Size(min = 5, max = 50)
     private String title;
-    private String description;
+
+    @NotEmpty
+    @Size(min = 10, max = 50)
     private String teacherInfo;
 
-    //add list of students
-
+    @NotEmpty
+    @Size(min = 10, max = 200)
+    private String description;
 
     public Long getLesson_id() {
         return lesson_id;
