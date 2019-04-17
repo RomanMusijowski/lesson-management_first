@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SpringSecConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private AuthenticationProvider authenticationProvider;
 
@@ -33,12 +34,14 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
 //        return passwordEncoder;
 //    }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder;
-    }
 
+
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public SpringSecConfig(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(PasswordEncoder passwordEncoder,
