@@ -12,15 +12,11 @@ public class LessonFormToLesson implements Converter<LessonForm, Lesson> {
     @Override
     public Lesson convert(LessonForm lessonForm) {
         Lesson lesson = new Lesson();
-//        List<User> users =null;
 
         lesson.setLesson_id(lessonForm.getLesson_id());
         lesson.setTitle(lessonForm.getTitle());
         lesson.setDescription(lessonForm.getDescription());
         lesson.setTeacherInfo(lessonForm.getTeacherInfo());
-//        lesson.setUsers(users);
-
-        //copy list of users
 
         return lesson;
     }

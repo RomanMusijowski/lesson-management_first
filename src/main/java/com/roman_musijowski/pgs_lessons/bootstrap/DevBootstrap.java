@@ -35,11 +35,23 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         loadLesson();
         assignUsersToStudentRole();
         assignUsersToAdminRole();
-       findUsers();
+        assignUserToLesson();
     }
 
-    private void findUsers(){
-        System.out.println(userService.findByUserName("admin@gmail.com").toString());
+    private void assignUserToLesson(){
+        List<User> users = (List<User>) userService.listAll();
+        List<Lesson> lessons = (List<Lesson>) lessonService.listAll();
+
+        users.forEach(user -> {
+            System.out.println(user.toString());
+
+            lessons.forEach(lesson -> {
+//                if (user.getUserName().equalsIgnoreCase("admin@gmail.com"));
+
+                lesson.addUser(user);
+                lessonService.saveOrUpdate(lesson);
+            });
+        });
     }
 
     private void assignUsersToStudentRole() {
@@ -59,10 +71,6 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     private void assignUsersToAdminRole() {
         List<Role> roles = (List<Role>) roleSevice.listAll();
         List<User> users = (List<User>) userService.listAll();
-
-//        for (User user : users) {
-//            System.out.println(user.getUserName());
-//        }
 
         roles.forEach(role ->{
             if(role.getRole().equalsIgnoreCase("ADMIN")){

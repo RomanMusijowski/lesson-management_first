@@ -30,8 +30,6 @@ public class SpringSecUserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("userName - "+username);
-//        System.out.println("User - "+userService.findByEmail(username).toString());//Error
-//        return userUserDetailsConverter.convert(userService.findByEmail(username));
         System.out.println("User - "+userService.findByUserName(username).toString());//Error
         return userUserDetailsConverter.convert(userService.findByUserName(username));
     }

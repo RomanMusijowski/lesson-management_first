@@ -20,7 +20,6 @@ public class UserToUserForm implements Converter<User, UserForm> {
         userForm.setYearOfStudies(user.getYearOfStudies());
         userForm.setIndex(user.getIndex());
 
-
         return userForm;
     }
 }

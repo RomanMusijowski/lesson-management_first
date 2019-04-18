@@ -42,17 +42,15 @@ public class User {
     private Boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
-//    private List<Role> roles = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "student_lesson",
-        joinColumns = @JoinColumn(name = "student_id"),
+    @JoinTable(name = "user_lesson",
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     private Set<Lesson> lessons = new HashSet<>();
-//    private List<Lesson> lessons = new ArrayList<>();
 
     public User() { }
 
@@ -120,14 +118,6 @@ public class User {
         this.password = password;
     }
 
-//    public List<Lesson> getLessons() {
-//        return lessons;
-//    }
-//
-//    public void setLessons(List<Lesson> lessons) {
-//        this.lessons = lessons;
-//    }
-
     public Long getId() {
         return id;
     }
@@ -160,14 +150,6 @@ public class User {
         this.lessons = lessons;
     }
 
-    //    public List<Role> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(List<Role> roles) {
-//        this.roles = roles;
-//    }
-
     public void addRole(Role role){
         if(!this.roles.contains(role)){
             this.roles.add(role);
@@ -181,6 +163,21 @@ public class User {
     public void removeRole(Role role){
         this.roles.remove(role);
         role.getUsers().remove(this);
+    }
+
+    public void addLesson(Lesson lesson){
+        if(!this.lessons.contains(lesson)){
+            this.lessons.add(lesson);
+        }
+
+        if(!lesson.getUsers().contains(this)){
+            lesson.getUsers().add(this);
+        }
+    }
+
+    public void removeLesson(Lesson lesson){
+        this.lessons.remove(lesson);
+        lesson.getUsers().remove(this);
     }
 
     @Override
@@ -208,8 +205,8 @@ public class User {
                 ", index='" + index + '\'' +
                 ", password='" + password + '\'' +
                 ", encryptedPassword='" + encryptedPassword + '\'' +
-//                ", roles=" + roles +
-//                ", lessons=" + lessons +
+                ", roles=" + roles +
+                ", lessons=" + lessons +
                 '}';
     }
 }

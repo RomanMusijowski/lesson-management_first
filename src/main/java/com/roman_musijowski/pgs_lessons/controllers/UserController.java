@@ -1,6 +1,8 @@
 package com.roman_musijowski.pgs_lessons.controllers;
 
 import com.roman_musijowski.pgs_lessons.commands.UserForm;
+import com.roman_musijowski.pgs_lessons.commands.validators.UserFormValidator;
+import com.roman_musijowski.pgs_lessons.converters.UserToUserForm;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +20,24 @@ import javax.validation.Valid;
 @RequestMapping(value = "/user")
 public class UserController {
 
+    private UserFormValidator userFormValidator;
+    private UserToUserForm userToUserForm;
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserFormValidator userFormValidator, UserService userService,
+                          UserToUserForm userToUserForm) {
+        this.userFormValidator = userFormValidator;
+        this.userToUserForm = userToUserForm;
         this.userService = userService;
     }
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
-        model.addAttribute("userForm", userService.getById(id));
+
+        User user = userService.getById(id);
+
+        model.addAttribute("userForm", userToUserForm.convert(user));
         return "user/userForm";
     }
     @RequestMapping("/list")
@@ -38,6 +48,8 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String saveOrUpdate(@Valid UserForm userForm, BindingResult bindingResult){
+
+        userFormValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()){
             return "user/userForm";

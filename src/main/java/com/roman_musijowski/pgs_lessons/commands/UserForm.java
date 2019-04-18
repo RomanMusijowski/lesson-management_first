@@ -6,6 +6,7 @@ public class UserForm {
 
     private Long id;
     @NotEmpty
+    @Size(min = 8)
     private String userName;
 
     @NotEmpty
@@ -16,9 +17,7 @@ public class UserForm {
     @Size(min = 2, max = 36)
     private String surName;
 
-    //??????????????Size for Integer
-    @NotNull
-    @Min(0)
+
     private Integer yearOfStudies;
 
     @NotEmpty
@@ -29,10 +28,12 @@ public class UserForm {
     @Size(min = 11, max = 11)
     private String index;
 
+    @NotEmpty
+    @Size(min = 6, max = 50)
     private String password;
-    private String passwordTextConf;
-
-//    private List<Lesson> lessons = new ArrayList<>();
+    @NotEmpty
+    @Size(min = 6, max = 50)
+    private String encryptedPassword;
 
 
     public Long getId() {
@@ -99,19 +100,11 @@ public class UserForm {
         this.password = password;
     }
 
-    public String getPasswordTextConf() {
-        return passwordTextConf;
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 
-    public void setPasswordTextConf(String passwordTextConf) {
-        this.passwordTextConf = passwordTextConf;
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
     }
-
-    //    public List<Lesson> getLessons() {
-//        return lessons;
-//    }
-//
-//    public void setLessons(List<Lesson> lessons) {
-//        this.lessons = lessons;
-//    }
 }

@@ -9,25 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class EncryptionServiceImpl implements EncryptionService {
 
-//    private StrongPasswordEncryptor strongEncryptor;
-//
-//    @Autowired
-//    public EncryptionServiceImpl(StrongPasswordEncryptor strongEncryptor) {
-//        this.strongEncryptor = strongEncryptor;
-//    }
-//
-//    public String encryptString(String input){
-//
-//        System.out.println("Input string "+input);
-//        return strongEncryptor.encryptPassword(input);
-//    }
-//
-//    public boolean checkPassword(String plainPassword, String encryptedPassword){
-//        System.out.println("Plain password"+plainPassword);
-//        System.out.println("Encrypted password"+encryptedPassword);
-//        return strongEncryptor.checkPassword(plainPassword, encryptedPassword);
-//    }
-
     private PasswordEncoder passwordEncoder;
 
     @Autowired

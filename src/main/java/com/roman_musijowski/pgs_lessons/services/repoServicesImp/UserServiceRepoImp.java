@@ -42,12 +42,10 @@ public class UserServiceRepoImp implements UserService {
 
     @Override
     public User saveOrUpdate(User object) {
-//        System.out.println("Save or update - "+object.toString());
         if(object.getPassword() != null){
             object.setEncryptedPassword(encryptionService.encryptString(object.getPassword()));
         }
 
-//        System.out.println("Save or update(encrypt) - "+object.toString());
         return userRepository.save(object);
     }
 
@@ -75,7 +73,13 @@ public class UserServiceRepoImp implements UserService {
             User existingUser = getById(newUser.getId());
 
             newUser.setEnabled(existingUser.getEnabled());
+            newUser.setRoles(existingUser.getRoles());
+            newUser.setLessons(existingUser.getLessons());
+
+            System.out.println("Roles - "+existingUser.getRoles());
+            System.out.println("Lessons - "+existingUser.getLessons());
         }
+
         return saveOrUpdate(newUser);
     }
 

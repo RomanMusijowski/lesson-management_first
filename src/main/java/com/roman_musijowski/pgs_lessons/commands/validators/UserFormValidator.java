@@ -17,9 +17,9 @@ public class UserFormValidator implements Validator{
     public void validate(Object o, Errors errors) {
         UserForm userForm= (UserForm) o;
 
-        if(!userForm.getPassword().equals(userForm.getPasswordTextConf())){
-            errors.rejectValue("passwordText", "PasswordsDontMatch.customerForm.passwordText", "Passwords Don't Match");
-            errors.rejectValue("passwordTextConf", "PasswordsDontMatch.customerForm.passwordTextConf", "Passwords Don't Match");
+        if(!userForm.getPassword().equals(userForm.getEncryptedPassword())){
+            errors.rejectValue("password", "PasswordsDontMatch.customerForm.password", "Passwords Don't Match");
+            errors.rejectValue("encryptedPassword", "PasswordsDontMatch.customerForm.encryptedPassword", "Passwords Don't Match");
         }
     }
 }

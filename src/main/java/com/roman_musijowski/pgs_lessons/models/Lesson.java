@@ -20,11 +20,10 @@ public class Lesson {
     @Column(name = "teacherInfo")
     private String teacherInfo;
 
-    @ManyToMany(mappedBy = "lessons")
+    @ManyToMany(mappedBy = "lessons",fetch = FetchType.EAGER)
     private Set<User> users = new HashSet<>();
 
-    public Lesson() {
-    }
+    public Lesson() { }
 
     public Long getLesson_id() {
         return lesson_id;
@@ -50,15 +49,6 @@ public class Lesson {
         this.description = description;
     }
 
-//    public List<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(List<User> users) {
-//        this.users = users;
-//    }
-
-
     public Set<User> getUsers() {
         return users;
     }
@@ -73,6 +63,21 @@ public class Lesson {
 
     public void setTeacherInfo(String teacherInfo) {
         this.teacherInfo = teacherInfo;
+    }
+
+    public void addUser(User user){
+        if(!this.users.contains(user)){
+            this.users.add(user);
+        }
+
+        if(!user.getLessons().contains(this)){
+            user.getLessons().add(this);
+        }
+    }
+
+    public void removeUser(User user){
+        this.users.remove(user);
+        user.getLessons().remove(this);
     }
 
     @Override
@@ -95,7 +100,7 @@ public class Lesson {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", teacherInfo='" + teacherInfo + '\'' +
-//                ", users=" + users +
+                ", users=" + users +
                 '}';
     }
 }

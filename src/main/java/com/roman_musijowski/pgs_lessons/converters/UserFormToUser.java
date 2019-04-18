@@ -13,10 +13,7 @@ public class UserFormToUser implements Converter<UserForm, User> {
     @Override
     public User convert(UserForm userForm) {
         User user = new User();
-//        List<Lesson> lessons = null;
 
-//        user.setRoles(new Role());
-//        user.setLessons(lessons);
         user.setId(userForm.getId());
         user.setUserName(userForm.getUserName());
         user.setName(userForm.getName());
@@ -25,8 +22,6 @@ public class UserFormToUser implements Converter<UserForm, User> {
         user.setYearOfStudies(userForm.getYearOfStudies());
         user.setPassword(userForm.getPassword());
         user.setIndex(userForm.getIndex());
-
-        //copy list of lessons
 
         return user;
     }

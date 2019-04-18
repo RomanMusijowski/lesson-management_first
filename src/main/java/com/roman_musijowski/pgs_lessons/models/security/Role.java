@@ -15,10 +15,8 @@ public class Role {
     @Column(name = "name")
     private String role;
 
-//    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "role",fetch = FetchType.EAGER)
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<User> users= new HashSet<>();
-//    private List<User> users= new ArrayList<>();
 
     public Role() { }
 
@@ -37,15 +35,6 @@ public class Role {
     public void setRole(String role) {
         this.role = role;
     }
-
-//    public List<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(List<User> users) {
-//        this.users = users;
-//    }
-
 
     public Set<User> getUsers() {
         return users;
@@ -89,7 +78,7 @@ public class Role {
         return "Role{" +
                 "role_id=" + role_id +
                 ", role='" + role + '\'' +
-//                ", users=" + users +
+                ", users=" + users +
                 '}';
     }
 }

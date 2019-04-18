@@ -12,8 +12,6 @@ public class CommonBeanConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-//        StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
-//        return encryptor;
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
