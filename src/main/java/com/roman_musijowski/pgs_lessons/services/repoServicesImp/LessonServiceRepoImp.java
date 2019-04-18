@@ -64,6 +64,7 @@ public class LessonServiceRepoImp implements LessonService {
         if (newLesson.getLesson_id() != null){
             Lesson existingLesson = getById(newLesson.getLesson_id());
 
+            newLesson.setUsers(existingLesson.getUsers());
         }
         return saveOrUpdate(newLesson);
     }
