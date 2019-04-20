@@ -48,11 +48,14 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/static/css") .permitAll()
                 .and().formLogin().loginPage("/login").permitAll()
                 .and().authorizeRequests().antMatchers("/").authenticated()
-                .and().authorizeRequests().antMatchers("/user/edit/{id}").hasAnyAuthority("STUDENT")
+                .and().authorizeRequests().antMatchers("/user/edit").hasAnyAuthority("STUDENT")
+                .and().authorizeRequests().antMatchers("/lesson/listForStudent").hasAnyAuthority("STUDENT")
                 .and().authorizeRequests().antMatchers("/user/list").hasAnyAuthority("ADMIN")
-                .and().authorizeRequests().antMatchers("/user/show").hasAnyAuthority("ADMIN")
-                .and().authorizeRequests().antMatchers("/lesson/**").hasAnyAuthority("ADMIN")
-                .and().authorizeRequests().antMatchers("/lesson/show").hasAnyAuthority("STUDENT")
+                .and().authorizeRequests().antMatchers("/user/show/{id}").hasAnyAuthority("ADMIN")
+                .and().authorizeRequests().antMatchers("/user/indexAdmin").hasAnyAuthority("ADMIN")
+                .and().authorizeRequests().antMatchers("/lesson/show/{id}").hasAnyAuthority("ADMIN")
+                .and().authorizeRequests().antMatchers("/lesson/list").hasAnyAuthority("ADMIN")
+                .and().authorizeRequests().antMatchers("/lesson/lessonForm").hasAnyAuthority("ADMIN")
                 .and().exceptionHandling().accessDeniedPage("/access_denied");
     }
 }
