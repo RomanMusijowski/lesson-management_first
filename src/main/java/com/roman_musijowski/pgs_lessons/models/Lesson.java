@@ -1,7 +1,12 @@
 package com.roman_musijowski.pgs_lessons.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "lessons")
@@ -20,10 +25,30 @@ public class Lesson {
     @Column(name = "teacherInfo")
     private String teacherInfo;
 
-    @ManyToMany(mappedBy = "lessons",fetch = FetchType.EAGER)
+    @Column(name = "time")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    private LocalDateTime date;
+
+    @ManyToMany(mappedBy = "lessons", fetch = FetchType.EAGER)
     private Set<User> users = new HashSet<>();
 
     public Lesson() { }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    //    public LocalDateTime getTime() {
+//        return time;
+//    }
+//
+//    public void setTime(LocalDateTime time) {
+//        this.time = time;
+//    }
 
     public Long getLesson_id() {
         return lesson_id;

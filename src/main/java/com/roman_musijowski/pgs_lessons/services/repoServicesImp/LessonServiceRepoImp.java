@@ -78,7 +78,7 @@ public class LessonServiceRepoImp implements LessonService {
             System.out.println("User removed");
         });
 
-        //deleting users from lessons
+        //deleting users from lesson
         for (Iterator<User> iterator = lesson.getUsers().iterator(); iterator.hasNext();) {
             User user = iterator.next();
             System.out.println(iterator.toString());

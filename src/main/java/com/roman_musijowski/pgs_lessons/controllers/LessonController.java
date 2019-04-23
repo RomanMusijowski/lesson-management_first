@@ -1,6 +1,7 @@
 package com.roman_musijowski.pgs_lessons.controllers;
 
 import com.roman_musijowski.pgs_lessons.commands.LessonForm;
+import com.roman_musijowski.pgs_lessons.commands.validators.LessonFormValidator;
 import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.services.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping(value = "/lesson")
 public class LessonController {
 
     private LessonService lessonService;
+    private LessonFormValidator lessonFormValidator;
+
 
     @Autowired
-    public LessonController(LessonService lessonService) {
+    public LessonController(LessonFormValidator lessonFormValidator, LessonService lessonService) {
+        this.lessonFormValidator = lessonFormValidator;
         this.lessonService = lessonService;
     }
 
@@ -39,8 +44,17 @@ public class LessonController {
 
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable Long id){
-        lessonService.delete(id);
-        return "redirect:/lesson/list";
+        System.out.println("Delete lesson start(id) - " + id);
+
+        Lesson lesson = lessonService.getById(id);
+
+        if (!lesson.getDate().isAfter(LocalDateTime.now())){
+            System.out.println("You can't delete this lesson it's too late");
+            return "redirect:/lesson/list";
+        }else {
+            lessonService.delete(id);
+            return "redirect:/lesson/list";
+        }
     }
 
     @RequestMapping("/new")
@@ -52,6 +66,8 @@ public class LessonController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String saveOrUpdate(@Valid LessonForm lessonForm, BindingResult bindingResult){
+
+        lessonFormValidator.validate(lessonForm, bindingResult);
 
         if (bindingResult.hasErrors()){
             return "lesson/lessonForm";

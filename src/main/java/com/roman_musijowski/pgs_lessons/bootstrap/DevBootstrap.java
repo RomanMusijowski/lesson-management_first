@@ -8,10 +8,10 @@ import com.roman_musijowski.pgs_lessons.services.RoleSevice;
 import com.roman_musijowski.pgs_lessons.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -36,9 +36,27 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         assignUsersToStudentRole();
         assignUsersToAdminRole();
         assignUserToLesson();
+
+        soutLesson();
     }
 
-    private void assignUserToLesson(){
+    private void soutLesson(){
+        List<User> users = (List<User>) userService.listAll();
+        List<Lesson> lessons = (List<Lesson>) lessonService.listAll();
+
+
+        System.out.println("Sout users - !!!!!!!!!!!!!!!!!!!!");
+        users.forEach(user -> {
+            System.out.println(user.toString());
+        });
+
+        System.out.println("Sout lessons - !!!!!!!!!!!!!!!!!!!!");
+        lessons.forEach(lesson -> {
+            System.out.println(lesson.toString());
+        });
+    }
+
+    private void assignUserToLesson() {
         List<User> users = (List<User>) userService.listAll();
         List<Lesson> lessons = (List<Lesson>) lessonService.listAll();
 
@@ -46,11 +64,19 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
             System.out.println(user.toString());
 
             lessons.forEach(lesson -> {
-//                if (user.getUserName().equalsIgnoreCase("admin@gmail.com"));
-
-                lesson.addUser(user);
-                lessonService.saveOrUpdate(lesson);
+                if (lesson.getTitle() == "Java" && user.getUserName() != "admin@gmail.com") {
+                    user.addLesson(lesson);
+                }
+                if (lesson.getTitle() == "Git" && user.getUserName() != "admin@gmail.com"
+                        && user.getUserName() != "plabuda@gmail.com"){
+                    user.addLesson(lesson);
+                }
+                if (lesson.getTitle() == "Git" && user.getUserName() != "admin@gmail.com"
+                        && user.getUserName() != "plabuda@gmail.com" && user.getUserName() != "ruszla@gmail.com"){
+                    user.addLesson(lesson);
+                }
             });
+            userService.saveOrUpdate(user);
         });
     }
 
@@ -142,22 +168,32 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private void loadLesson(){
+        LocalDateTime localDateTime = LocalDateTime.of(2019,05,15,18,30);
+
         Lesson lesson = new Lesson();
-        lesson.setTitle("JAva");
+        lesson.setTitle("Java");
         lesson.setDescription("First lesson");
         lesson.setTeacherInfo("Dr. Koziol");
+        lesson.setDate(localDateTime);
         lessonService.saveOrUpdate(lesson);
+
+        localDateTime = LocalDateTime.of(2019,06,11,18,00);
 
         Lesson lesson2 = new Lesson();
         lesson2.setTitle("Git");
         lesson2.setDescription("Second lesson");
         lesson2.setTeacherInfo("Dr. URban");
+        lesson2.setDate(localDateTime);
         lessonService.saveOrUpdate(lesson2);
+
+        localDateTime = LocalDateTime.of(2019,07,8,19,00);
+
 
         Lesson lesson3 = new Lesson();
         lesson3.setTitle("Spring");
         lesson3.setDescription("Third lesson");
         lesson3.setTeacherInfo("Dr. Nowojewski");
+        lesson3.setDate(localDateTime);
         lessonService.saveOrUpdate(lesson3);
     }
 }

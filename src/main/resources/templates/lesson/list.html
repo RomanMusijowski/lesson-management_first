@@ -17,7 +17,7 @@
 <body>
 <div class="container">
     <div th:if="${not #lists.isEmpty(lessons)}">
-        <h2>Customer List</h2>
+        <h2>Lesson List</h2>
         <table class="table table-striped">
             <tr>
                 <th>Id </th>
@@ -33,6 +33,7 @@
             <tr th:each="lesson : ${lessons}">
                 <td th:text="${lesson.lesson_id}"></td>
                 <td th:text="${lesson.title}"></td>
+                <td th:text="${#temporals.format(lesson.date, 'dd-MM-yyyy HH:mm')}"></td>
                 <td th:text="${lesson.description}"></td>
                 <td th:text="${lesson.teacherInfo}"></td>
                 <td><a th:href="${'/lesson/show/' + lesson.lesson_id}">View</a> </td>

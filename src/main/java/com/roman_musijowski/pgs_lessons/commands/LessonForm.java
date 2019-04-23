@@ -1,7 +1,11 @@
 package com.roman_musijowski.pgs_lessons.commands;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 public class LessonForm {
 
@@ -18,6 +22,19 @@ public class LessonForm {
     @NotEmpty
     @Size(min = 10, max = 200)
     private String description;
+
+    @NotNull
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    private LocalDateTime date;
+
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 
     public Long getLesson_id() {
         return lesson_id;

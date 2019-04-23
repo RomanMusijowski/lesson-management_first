@@ -17,6 +17,7 @@ public class LessonFormToLesson implements Converter<LessonForm, Lesson> {
         lesson.setTitle(lessonForm.getTitle());
         lesson.setDescription(lessonForm.getDescription());
         lesson.setTeacherInfo(lessonForm.getTeacherInfo());
+        lesson.setDate(lessonForm.getDate());
 
         return lesson;
     }
