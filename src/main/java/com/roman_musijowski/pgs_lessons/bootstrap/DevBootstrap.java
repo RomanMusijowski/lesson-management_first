@@ -66,13 +66,14 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
             lessons.forEach(lesson -> {
                 if (lesson.getTitle() == "Java" && user.getUserName() != "admin@gmail.com") {
                     user.addLesson(lesson);
-                }
-                if (lesson.getTitle() == "Git" && user.getUserName() != "admin@gmail.com"
+
+                }else if (lesson.getTitle() == "Git" && user.getUserName() != "admin@gmail.com"
                         && user.getUserName() != "plabuda@gmail.com"){
                     user.addLesson(lesson);
-                }
-                if (lesson.getTitle() == "Git" && user.getUserName() != "admin@gmail.com"
-                        && user.getUserName() != "plabuda@gmail.com" && user.getUserName() != "ruszla@gmail.com"){
+
+                }else if (lesson.getTitle() == "Spring" && user.getUserName() != "admin@gmail.com"
+                        && user.getUserName() != "plabuda@gmail.com"
+                        && user.getUserName() != "rushla@gmail.com"){
                     user.addLesson(lesson);
                 }
             });
