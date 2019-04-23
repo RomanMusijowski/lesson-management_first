@@ -41,7 +41,7 @@ public class IndexController {
 
         System.out.println("Login userName - " + authentication.getName());
         modelMap.addAttribute("lessons", lessonService.listAll());
-        return "lesson/listForStudent";
+        return "lesson/indexStudent";
 
     }
 
@@ -54,15 +54,4 @@ public class IndexController {
     public String loginForm(){
         return "login";
     }
-
-
-//    @RequestMapping(value = "/role", method = RequestMethod.GET)
-//    @ResponseBody
-//    public String currentRole(Principal principal) {
-//        String email = principal.getName();
-//
-//        User user = userService.findByUserName(email);
-//
-//        return user.getRoles().toString();
-//    }
 }   
