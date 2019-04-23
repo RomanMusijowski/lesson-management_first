@@ -52,8 +52,6 @@
 
                     <tr th:each="user : ${users}">
                         <td th:text="${user.id} +' '+ ${user.name} +' '+ ${user.surName}"></td>
-<!--                        <td th:each="lesson : ${lessons}" th:if="${user.getLessons().contains(lesson)} ? 'Y' : 'N'">C</td>-->
-<!--                        <td  th:if="${lesson.getUsers().contains(user)} ? 'Y' : 'N'">C</td>-->
 
                             <td th:each="lesson : ${lessons}" >
                                 <span th:if="${lesson.getUsers().contains(user)}">Y</span>
