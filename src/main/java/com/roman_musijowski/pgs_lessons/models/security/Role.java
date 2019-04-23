@@ -1,8 +1,11 @@
 package com.roman_musijowski.pgs_lessons.models.security;
 
 import com.roman_musijowski.pgs_lessons.models.User;
+
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -78,7 +81,6 @@ public class Role {
         return "Role{" +
                 "role_id=" + role_id +
                 ", role='" + role + '\'' +
-                ", users=" + users +
                 '}';
     }
 }

@@ -5,7 +5,9 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -46,10 +48,22 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,
+        cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "user_lesson",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "lesson_id"))
+            joinColumns = {
+                @JoinColumn(
+                    name = "user_id",
+                    referencedColumnName = "id"
+                )
+            },
+            inverseJoinColumns = {
+                @JoinColumn(
+                    name = "lesson_id",
+                    referencedColumnName = "lesson_id"
+                )
+            }
+    )
     private Set<Lesson> lessons = new HashSet<>();
 
     public User() { }
@@ -206,7 +220,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", encryptedPassword='" + encryptedPassword + '\'' +
                 ", roles=" + roles +
-                ", lessons=" + lessons +
+//                ", lessons=" + lessons +
                 '}';
     }
 }

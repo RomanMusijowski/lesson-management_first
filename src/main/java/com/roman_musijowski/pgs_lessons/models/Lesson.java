@@ -42,14 +42,6 @@ public class Lesson {
         this.date = date;
     }
 
-    //    public LocalDateTime getTime() {
-//        return time;
-//    }
-//
-//    public void setTime(LocalDateTime time) {
-//        this.time = time;
-//    }
-
     public Long getLesson_id() {
         return lesson_id;
     }
@@ -125,6 +117,7 @@ public class Lesson {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", teacherInfo='" + teacherInfo + '\'' +
+                ", date=" + date +
                 ", users=" + users +
                 '}';
     }
