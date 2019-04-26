@@ -5,9 +5,9 @@ import com.roman_musijowski.pgs_lessons.converters.UserFormToUser;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.models.security.Role;
 import com.roman_musijowski.pgs_lessons.repositories.UserRepositoryImp;
+import com.roman_musijowski.pgs_lessons.security.services.EncryptionService;
 import com.roman_musijowski.pgs_lessons.services.RoleSevice;
 import com.roman_musijowski.pgs_lessons.services.UserService;
-import com.roman_musijowski.pgs_lessons.services.security.EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,10 +55,8 @@ public class UserServiceRepoImp implements UserService {
 
     @Override
     public void delete(Long id) {
-        User user = getById(id);
-        System.out.println(user.toString());
 
-        if (getById(id).getUserName() == "admin@gmail.com"){
+        if (id == 1L){
             System.out.println("You can't delete admin");
             return;
         }
