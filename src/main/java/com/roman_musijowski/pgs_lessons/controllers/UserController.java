@@ -86,8 +86,6 @@ public class UserController {
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable Long id){
 
-
-
         userService.delete(id);
         return "redirect:/user/list";
     }
@@ -105,7 +103,7 @@ public class UserController {
 
         User newUser = userService.saveOrUpdateUserForm(userForm);
 
-        return "redirect:user/show/" + newUser.getId();
+        return "redirect:/";
     }
 
     @RequestMapping("/editForAdmin/{id}")
