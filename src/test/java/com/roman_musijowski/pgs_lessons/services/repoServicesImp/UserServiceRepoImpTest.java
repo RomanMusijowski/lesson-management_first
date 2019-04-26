@@ -3,8 +3,8 @@ package com.roman_musijowski.pgs_lessons.services.repoServicesImp;
 import com.roman_musijowski.pgs_lessons.converters.UserFormToUser;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.repositories.UserRepositoryImp;
+import com.roman_musijowski.pgs_lessons.security.services.EncryptionService;
 import com.roman_musijowski.pgs_lessons.services.RoleSevice;
-import com.roman_musijowski.pgs_lessons.services.security.EncryptionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -40,7 +40,7 @@ class UserServiceRepoImpTest {
         service = new UserServiceRepoImp(userRepositoryImp,roleSevice, userFormToUser,encryptionService);
 
         user = new User();
-        user.setId(1L);
+        user.setId(5L);
         user.setUserName(USER_NAME);
     }
 
@@ -84,14 +84,8 @@ class UserServiceRepoImpTest {
 
     @Test
     void delete() {
-        service.delete(1L);
-        verify(userRepositoryImp).deleteById(anyLong());
-    }
-
-    @Test
-    void saveOrUpdateUserForm() {
-
-
+        service.delete(5L);
+        verify(userRepositoryImp).deleteById(any());
     }
 
     @Test

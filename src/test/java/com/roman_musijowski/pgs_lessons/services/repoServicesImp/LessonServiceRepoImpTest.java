@@ -83,13 +83,6 @@ public class LessonServiceRepoImpTest {
     }
 
 //    @Test
-//    public void delete() {
-//        service.delete(returnLesson);
-//
-//        verify(lessonRepositoryImp, times(1)).delete(any());
-//    }
-//
-//    @Test
 //    void deleteById() {
 //        service.delete(returnLesson.getLesson_id());
 //
