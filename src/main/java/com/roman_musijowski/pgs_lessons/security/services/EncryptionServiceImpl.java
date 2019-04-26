@@ -1,6 +1,5 @@
-package com.roman_musijowski.pgs_lessons.services.security;
+package com.roman_musijowski.pgs_lessons.security.services;
 
-import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,14 +17,14 @@ public class EncryptionServiceImpl implements EncryptionService {
 
     @Override
     public String encryptString(String input) {
-        System.out.println("Input string "+input);
+        System.out.println("Input password - "+input);
         return passwordEncoder.encode(input);
     }
 
     @Override
     public boolean checkPassword(String plainPassword, String encryptedPassword) {
-        System.out.println("Plain password"+plainPassword);
-        System.out.println("Encrypted password"+encryptedPassword);
+        System.out.println("Check new password - "+plainPassword);
+        System.out.println("In db password - "+encryptedPassword);
         return passwordEncoder.matches(plainPassword, encryptedPassword);
     }
 }

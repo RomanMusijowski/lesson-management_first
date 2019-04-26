@@ -1,4 +1,4 @@
-package com.roman_musijowski.pgs_lessons.services.security;
+package com.roman_musijowski.pgs_lessons.security.services;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

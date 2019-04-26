@@ -1,4 +1,4 @@
-package com.roman_musijowski.pgs_lessons.config;
+package com.roman_musijowski.pgs_lessons.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

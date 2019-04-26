@@ -1,4 +1,4 @@
-package com.roman_musijowski.pgs_lessons.services.security;
+package com.roman_musijowski.pgs_lessons.security.services;
 
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.services.UserService;
@@ -30,7 +30,7 @@ public class SpringSecUserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("userName - "+username);
-        System.out.println("User - "+userService.findByUserName(username).toString());//Error
+//        System.out.println("User - "+userService.findByUserName(username).toString());//Error
         return userUserDetailsConverter.convert(userService.findByUserName(username));
     }
 }
