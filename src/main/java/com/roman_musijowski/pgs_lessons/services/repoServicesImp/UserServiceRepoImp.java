@@ -4,7 +4,7 @@ import com.roman_musijowski.pgs_lessons.commands.UserForm;
 import com.roman_musijowski.pgs_lessons.converters.UserFormToUser;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.models.security.Role;
-import com.roman_musijowski.pgs_lessons.repositories.UserRepository;
+import com.roman_musijowski.pgs_lessons.repositories.UserRepositoryImp;
 import com.roman_musijowski.pgs_lessons.services.RoleSevice;
 import com.roman_musijowski.pgs_lessons.services.UserService;
 import com.roman_musijowski.pgs_lessons.services.security.EncryptionService;
@@ -13,19 +13,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceRepoImp implements UserService {
 
-    private UserRepository userRepository;
+    private UserRepositoryImp userRepositoryImp;
     private UserFormToUser userFormToUser;
     private EncryptionService encryptionService;
     private RoleSevice roleSevice;
 
     @Autowired
-    public UserServiceRepoImp(UserRepository userRepository,  RoleSevice roleSevice, UserFormToUser userFormToUser, EncryptionService encryptionService) {
-        this.userRepository = userRepository;
+    public UserServiceRepoImp(UserRepositoryImp userRepositoryImp, RoleSevice roleSevice, UserFormToUser userFormToUser, EncryptionService encryptionService) {
+        this.userRepositoryImp = userRepositoryImp;
         this.userFormToUser = userFormToUser;
         this.encryptionService = encryptionService;
         this.roleSevice = roleSevice;
@@ -34,14 +33,13 @@ public class UserServiceRepoImp implements UserService {
     @Override
     public List<User> listAll() {
         List<User> users = new  ArrayList<>();
-        userRepository.findAll().forEach(users::add);
+        userRepositoryImp.findAll().forEach(users::add);
         return users;
     }
 
     @Override
     public User getById(Long id) {
-        Optional<User> student = userRepository.findById(id);
-        return student.get();
+        return userRepositoryImp.getOne(id);
     }
 
     @Override
@@ -52,27 +50,19 @@ public class UserServiceRepoImp implements UserService {
         }
         System.out.println("User updated");
 
-        return userRepository.save(object);
-    }
-
-    @Override
-    public void delete(User object) {
-        userRepository.delete(object);
+        return userRepositoryImp.save(object);
     }
 
     @Override
     public void delete(Long id) {
+        User user = getById(id);
+        System.out.println(user.toString());
 
         if (getById(id).getUserName() == "admin@gmail.com"){
             System.out.println("You can't delete admin");
             return;
         }
-        userRepository.deleteById(id);
-    }
-
-    @Override
-    public User getById(Integer id) {
-        return null;
+        userRepositoryImp.deleteById(id);
     }
 
     @Override
@@ -98,8 +88,6 @@ public class UserServiceRepoImp implements UserService {
             newUser.setRoles(existingUser.getRoles());
             newUser.setLessons(existingUser.getLessons());
 
-//            System.out.println("Roles - "+existingUser.getRoles());
-//            System.out.println("Lessons - "+existingUser.getLessons());
             System.out.println("Added info to existing user!!");
         }
 
@@ -108,13 +96,13 @@ public class UserServiceRepoImp implements UserService {
 
     @Override
     public User findByUserName(String userName) {
-        return userRepository.findByUserName(userName);
+        return userRepositoryImp.findByUserName(userName);
     }
 
 
 //    @Override
 //    public User findByEmail(String email) {
-//        return userRepository.findByEmail(email);
+//        return userRepositoryImp.findByEmail(email);
 //    }
 
 }

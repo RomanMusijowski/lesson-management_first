@@ -9,11 +9,7 @@ public interface CRUDService<T> {
 
     T getById(Long id);
 
-    T getById(Integer id);
-
     T saveOrUpdate(T object);
-
-    void delete(T object);
 
     void delete(Long id);
 }
