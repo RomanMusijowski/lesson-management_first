@@ -16,7 +16,6 @@ public class LessonTest {
     @Before
     public void setUp() throws Exception {
         lesson = new Lesson();
-
     }
 
     @Test
