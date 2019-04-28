@@ -84,8 +84,15 @@ class UserServiceRepoImpTest {
 
     @Test
     void delete() {
-        service.deleteById(5L);
-        verify(userRepositoryImp).deleteById(anyLong());
+        User deleteUser = new User();
+        Long id = 3L;
+        deleteUser.setId(id);
+
+        when(userRepositoryImp.getOne(any())).thenReturn(deleteUser);
+        User actualUser = service.deleteById(id);
+
+        verify(userRepositoryImp, times(1)).getOne(any());
+        verify(userRepositoryImp, times(1)).deleteById(anyLong());
     }
 
     @Test

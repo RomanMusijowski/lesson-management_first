@@ -78,8 +78,14 @@ class RoleServiceRepoImpTest {
 
     @Test
     void deleteById() {
-        service.deleteById(1L);
+        Role deleteRole = new Role();
+        Integer id = 3;
+        deleteRole.setRole_id(id);
 
-        verify(roleRepositoryImp).deleteById(any());
+        when(roleRepositoryImp.getOne(any())).thenReturn(deleteRole);
+        Role actualRole = service.deleteById(Long.valueOf(id));
+
+        verify(roleRepositoryImp, times(1)).getOne(any());
+        verify(roleRepositoryImp, times(1)).deleteById(anyInt());
     }
 }

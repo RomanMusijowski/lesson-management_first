@@ -38,7 +38,7 @@ public class LessonServiceRepoImpTest {
         service = new LessonServiceRepoImp(userService, lessonRepositoryImp, lessonFormToLesson);
 
         lesson = new Lesson();
-        lesson.setLesson_id(1L);
+        lesson.setLesson_id(5L);
         lesson.setTitle("Java Spring");
 
         user = new User();
@@ -59,7 +59,7 @@ public class LessonServiceRepoImpTest {
 
         when(lessonRepositoryImp.findAll()).thenReturn(lessons);
 
-        List<Lesson> lessonsNew= service.listAll();
+        List<Lesson> lessonsNew = service.listAll();
 
         assertNotNull(lessons);
         assertEquals(2, lessons.size());
@@ -70,7 +70,7 @@ public class LessonServiceRepoImpTest {
     @Test
     public void getById() {
         when(lessonRepositoryImp.getOne(anyLong())).thenReturn(lesson);
-        Lesson lesson = service.getById(1L);
+        Lesson lesson = service.getById(5L);
 
         assertNotNull(lesson);
     }
@@ -88,13 +88,16 @@ public class LessonServiceRepoImpTest {
         verify(lessonRepositoryImp).save(any());
     }
 
-//    @Test
-//    void deleteById() {
-//
-//        service.saveOrUpdate(lesson);
-//
-//        service.deleteById(1L);
-//
-//        verify(lessonRepositoryImp).deleteById(any());
-//    }
+    @Test
+    void deleteById() {
+        Lesson deleteLesson = new Lesson();
+        Long id = 3L;
+        deleteLesson.setLesson_id(id);
+
+        when(lessonRepositoryImp.getOne(any())).thenReturn(deleteLesson);
+        Lesson actualLesson = service.deleteById(id);
+
+        verify(lessonRepositoryImp, times(1)).getOne(any());
+        verify(lessonRepositoryImp, times(1)).deleteById(anyLong());
+    }
 }
