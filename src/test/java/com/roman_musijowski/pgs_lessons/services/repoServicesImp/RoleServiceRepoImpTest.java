@@ -77,8 +77,8 @@ class RoleServiceRepoImpTest {
     }
 
     @Test
-    void delete() {
-        service.delete(1L);
+    void deleteById() {
+        service.deleteById(1L);
 
         verify(roleRepositoryImp).deleteById(any());
     }

@@ -84,8 +84,8 @@ class UserServiceRepoImpTest {
 
     @Test
     void delete() {
-        service.delete(5L);
-        verify(userRepositoryImp).deleteById(any());
+        service.deleteById(5L);
+        verify(userRepositoryImp).deleteById(anyLong());
     }
 
     @Test
