@@ -28,7 +28,7 @@ public class LessonServiceRepoImpTest {
     @Mock
     LessonFormToLesson lessonFormToLesson;
 
-    Lesson returnLesson;
+    Lesson lesson;
     User user;
 
     @BeforeEach
@@ -37,12 +37,12 @@ public class LessonServiceRepoImpTest {
 
         service = new LessonServiceRepoImp(userService, lessonRepositoryImp, lessonFormToLesson);
 
-        returnLesson = new Lesson();
-        returnLesson.setLesson_id(1L);
-        returnLesson.setTitle("Java Spring");
+        lesson = new Lesson();
+        lesson.setLesson_id(1L);
+        lesson.setTitle("Java Spring");
 
         user = new User();
-        user.setId(1L);
+        user.setId(2L);
         user.setUserName("someUser@gmail.com");
     }
 
@@ -54,7 +54,7 @@ public class LessonServiceRepoImpTest {
         lesson.setLesson_id(2L);
         lesson.setTitle("Base of git");
 
-        lessons.add(returnLesson);
+        lessons.add(lesson);
         lessons.add(lesson);
 
         when(lessonRepositoryImp.findAll()).thenReturn(lessons);
@@ -64,12 +64,12 @@ public class LessonServiceRepoImpTest {
         assertNotNull(lessons);
         assertEquals(2, lessons.size());
 
-        verify(lessonRepositoryImp, times(1));
+        verify(lessonRepositoryImp, times(1)).findAll();
     }
 
     @Test
     public void getById() {
-        when(lessonRepositoryImp.getOne(anyLong())).thenReturn(returnLesson);
+        when(lessonRepositoryImp.getOne(anyLong())).thenReturn(lesson);
         Lesson lesson = service.getById(1L);
 
         assertNotNull(lesson);
@@ -77,20 +77,24 @@ public class LessonServiceRepoImpTest {
 
     @Test
     public void saveOrUpdate() {
-        lessonRepositoryImp.save(returnLesson);
+        Lesson saveOrUpdate = new Lesson();
+        saveOrUpdate.setLesson_id(3L);
 
+        when(lessonRepositoryImp.save(any())).thenReturn(lesson);
 
+        Lesson savedLesson = service.saveOrUpdate(saveOrUpdate);
+
+        assertNotNull(savedLesson);
+        verify(lessonRepositoryImp).save(any());
     }
 
 //    @Test
 //    void deleteById() {
-//        service.delete(returnLesson.getLesson_id());
 //
-//        verify(lessonRepositoryImp, times(1)).delete(any());
+//        service.saveOrUpdate(lesson);
+//
+//        service.deleteById(1L);
+//
+//        verify(lessonRepositoryImp).deleteById(any());
 //    }
-
-    @Test
-    public void saveOrUpdateLessonForm() {
-
-    }
 }
