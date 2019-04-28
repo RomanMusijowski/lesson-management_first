@@ -39,6 +39,7 @@ public class LessonServiceRepoImp implements LessonService {
 
     @Override
     public Lesson getById(Long id) {
+
         return lessonRepositoryImp.getOne(id);
     }
 
@@ -48,11 +49,12 @@ public class LessonServiceRepoImp implements LessonService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public Lesson deleteById(Long id) {
         System.out.println("Delete in service");
 
         Lesson lesson = getById(id);
-        if (lesson != null) {
+
+        try {
             Set<User> users = lesson.getUsers();
 
             //deleting lessons from users
@@ -78,9 +80,12 @@ public class LessonServiceRepoImp implements LessonService {
 
             lessonRepositoryImp.deleteById(id);
             System.out.println("Lesson deleted!");
-
-        }else {
-            System.out.println("Lesson == null");
+            return lesson;
+        }catch (NullPointerException e){
+            System.out.println("This lesson have not users");
+        }finally {
+            System.out.println("Lesson deleted");
+            return lesson;
         }
     }
 

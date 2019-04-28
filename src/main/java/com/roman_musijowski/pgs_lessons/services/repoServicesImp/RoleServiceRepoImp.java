@@ -33,13 +33,14 @@ public class RoleServiceRepoImp implements RoleSevice {
 
     @Override
     public Role saveOrUpdate(Role object) {
-
         return roleRepositoryImp.save(object);
     }
 
     @Override
-    public void deleteById(Long id) {
-        roleRepositoryImp.deleteById(Math.toIntExact(id));
+    public Role deleteById(Long id) {
+        Role role = getById(id);
 
+        roleRepositoryImp.deleteById(Math.toIntExact(id));
+        return role;
     }
 }
