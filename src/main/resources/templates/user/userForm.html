@@ -21,12 +21,6 @@
     <div>
         <form class="form-horizontal" th:object="${userForm}" th:action="@{/user}" method="post">
 
-<!--            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">-->
-<!--                <p>Errors:</p>-->
-<!--                <ul>-->
-<!--                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Validation Error</li>-->
-<!--                </ul>-->
-<!--            </div>-->
             <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                 <p>Please Correct values in error below:</p>
             </div>

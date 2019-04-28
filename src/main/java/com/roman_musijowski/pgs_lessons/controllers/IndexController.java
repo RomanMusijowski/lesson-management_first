@@ -28,11 +28,6 @@ public class IndexController {
         modelMap.addAttribute("user", user);
 
 
-        for (Object lesson : lessonService.listAll()){
-            System.out.println("Lessons - ");
-            System.out.println(lesson.toString());
-        }
-
         if (user.getUserName() == "admin@gmail.com"){
             modelMap.addAttribute("users" ,userService.listAll());
             modelMap.addAttribute("lessons", lessonService.listAll());
