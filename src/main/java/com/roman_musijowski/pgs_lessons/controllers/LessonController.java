@@ -2,6 +2,7 @@ package com.roman_musijowski.pgs_lessons.controllers;
 
 import com.roman_musijowski.pgs_lessons.commands.LessonForm;
 import com.roman_musijowski.pgs_lessons.commands.validators.LessonFormValidator;
+import com.roman_musijowski.pgs_lessons.converters.LessoneToLessonForm;
 import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.services.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,15 @@ public class LessonController {
 
     private LessonService lessonService;
     private LessonFormValidator lessonFormValidator;
+    private LessoneToLessonForm lessoneToLessonForm;
 
 
     @Autowired
-    public LessonController(LessonFormValidator lessonFormValidator, LessonService lessonService) {
+    public LessonController(LessonFormValidator lessonFormValidator, LessonService lessonService,
+                            LessoneToLessonForm lessoneToLessonForm) {
         this.lessonFormValidator = lessonFormValidator;
         this.lessonService = lessonService;
+        this.lessoneToLessonForm = lessoneToLessonForm;
     }
 
     @RequestMapping("/list")
@@ -49,10 +53,10 @@ public class LessonController {
         Lesson lesson = lessonService.getById(id);
 
         if (!lesson.getDate().isAfter(LocalDateTime.now())){
-            System.out.println("You can't delete this lesson it's too late");
+            System.out.println("You can't deleteById this lesson it's too late");
             return "redirect:/lesson/list";
         }else {
-            lessonService.delete(id);
+            lessonService.deleteById(id);
             return "redirect:/lesson/list";
         }
     }
@@ -80,7 +84,10 @@ public class LessonController {
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
-        model.addAttribute("lessonForm", lessonService.getById(id));
+        Lesson lesson = lessonService.getById(id);
+        LessonForm lessonForm = lessoneToLessonForm.convert(lesson);
+
+        model.addAttribute("lessonForm", lessonForm);
         return "lesson/lessonForm";
     }
 }
