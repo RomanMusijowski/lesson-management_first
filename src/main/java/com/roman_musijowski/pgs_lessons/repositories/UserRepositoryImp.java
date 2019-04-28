@@ -5,5 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepositoryImp extends JpaRepository<User, Long> {
     User findByUserName(String userName);
-
 }

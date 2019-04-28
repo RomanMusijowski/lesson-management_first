@@ -1,7 +1,7 @@
 package com.roman_musijowski.pgs_lessons.converters;
 
 import com.roman_musijowski.pgs_lessons.models.User;
-import com.roman_musijowski.pgs_lessons.services.security.UserDetailsImpl;
+import com.roman_musijowski.pgs_lessons.security.services.UserDetailsImpl;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

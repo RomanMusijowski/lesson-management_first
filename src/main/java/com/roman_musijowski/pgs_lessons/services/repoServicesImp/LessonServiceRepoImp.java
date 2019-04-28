@@ -48,7 +48,7 @@ public class LessonServiceRepoImp implements LessonService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         System.out.println("Delete in service");
 
         Lesson lesson = getById(id);
@@ -80,9 +80,7 @@ public class LessonServiceRepoImp implements LessonService {
             System.out.println("Lesson deleted!");
 
         }else {
-            lessonRepositoryImp.deleteById(id);
-            System.out.println("Lesson deleted!");
-
+            System.out.println("Lesson == null");
         }
     }
 

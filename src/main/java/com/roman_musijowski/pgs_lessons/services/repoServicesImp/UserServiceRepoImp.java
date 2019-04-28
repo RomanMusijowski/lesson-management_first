@@ -54,10 +54,10 @@ public class UserServiceRepoImp implements UserService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteById(Long id) {
 
         if (id == 1L){
-            System.out.println("You can't delete admin");
+            System.out.println("You can't deleteById admin");
             return;
         }
         userRepositoryImp.deleteById(id);
