@@ -103,7 +103,8 @@ public class UserServiceRepoImp implements UserService {
     }
 
     @Override
-    @CacheEvict(cacheNames = "users", key = "#id")
+//    @CacheEvict(cacheNames = "users", key = "#id")
+    @CacheEvict(cacheNames = "users", allEntries = true)
     public User deleteById(Long id) {
 
         User user= getById(id);
