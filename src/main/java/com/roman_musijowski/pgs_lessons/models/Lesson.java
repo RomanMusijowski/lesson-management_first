@@ -25,7 +25,7 @@ public class Lesson {
     @Column(name = "teacherInfo")
     private String teacherInfo;
 
-    @Column(name = "time")
+    @Column(name = "date")
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime date;
 

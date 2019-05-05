@@ -6,6 +6,8 @@ import com.roman_musijowski.pgs_lessons.models.security.Role;
 import com.roman_musijowski.pgs_lessons.services.LessonService;
 import com.roman_musijowski.pgs_lessons.services.RoleSevice;
 import com.roman_musijowski.pgs_lessons.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -16,6 +18,9 @@ import java.util.List;
 
 @Component
 public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> {
+
+    private static final Logger logger = LoggerFactory.getLogger(DevBootstrap.class);
+
 
     private RoleSevice roleSevice;
     private LessonService lessonService;
@@ -57,6 +62,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private void assignUserToLesson() {
+        logger.info("Assign user to lessons");
         List<User> users = (List<User>) userService.listAll();
         List<Lesson> lessons = (List<Lesson>) lessonService.listAll();
 
@@ -82,6 +88,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private void assignUsersToStudentRole() {
+        logger.info("Assign user to STUDENT role");
         List<Role> roles = (List<Role>) roleSevice.listAll();
         List<User> users = (List<User>) userService.listAll();
 
@@ -96,6 +103,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private void assignUsersToAdminRole() {
+        logger.info("Assign user to ADMIN role");
         List<Role> roles = (List<Role>) roleSevice.listAll();
         List<User> users = (List<User>) userService.listAll();
 
@@ -112,6 +120,8 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private void loadRoles(){
+        logger.info("Load roles");
+
         Role admin = new Role();
         admin.setRole("ADMIN");
         roleSevice.saveOrUpdate(admin);
@@ -122,6 +132,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     }
 //
     private void loadUsers(){
+        logger.info("Load users");
 
         User admin = new User();
         admin.setUserName("admin@gmail.com");
@@ -169,6 +180,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private void loadLesson(){
+        logger.info("Load lessons");
         LocalDateTime localDateTime = LocalDateTime.of(2019,05,15,18,30);
 
         Lesson lesson = new Lesson();

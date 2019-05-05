@@ -7,6 +7,8 @@ import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.services.LessonService;
 import com.roman_musijowski.pgs_lessons.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
 
     private LessonService lessonService;
     private UserFormValidator userFormValidator;
@@ -41,8 +46,21 @@ public class UserController {
 
     @RequestMapping("/edit")
     public String edit(Model model, Authentication authentication) {
+        logger.info("Edit by authentication");
 
-        User user = userService.findByUserName(authentication.getName());
+        String userName = authentication.getName();
+
+        User user = userService.findByUserName(userName);
+
+        model.addAttribute("userForm", userToUserForm.convert(user));
+        return "user/userForm";
+    }
+
+    @RequestMapping("/editForAdmin/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        logger.info("Edit by id - "+ id);
+
+        User user = userService.getById(id);
 
         model.addAttribute("userForm", userToUserForm.convert(user));
         return "user/userForm";
@@ -51,6 +69,8 @@ public class UserController {
 
     @RequestMapping("/list")
     public String listUSers(Model model){
+        logger.info("Get list of users");
+
         model.addAttribute("users", userService.listAll());
         return "user/list";
     }
@@ -59,6 +79,9 @@ public class UserController {
 
     @RequestMapping(value = "addLesson/{id}")
     public String addLesson(@PathVariable Long id, Authentication authentication){
+        logger.info("Add lesson by id - "+ id);
+
+
         User user = userService.findByUserName(authentication.getName());
         Lesson lesson = lessonService.getById(id);
         user.addLesson(lesson);
@@ -72,6 +95,8 @@ public class UserController {
 
     @RequestMapping(value = "removeLesson/{id}")
     public String removeLesson(@PathVariable Long id, Authentication authentication){
+
+
         User user = userService.findByUserName(authentication.getName());
         Lesson lesson = lessonService.getById(id);
         user.removeLesson(lesson);
@@ -85,6 +110,8 @@ public class UserController {
 
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable Long id){
+        logger.info("Delete by id - "+ id);
+
 
         userService.deleteById(id);
         return "redirect:/user/list";
@@ -92,35 +119,24 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String saveOrUpdate(@Valid UserForm userForm, BindingResult bindingResult){
-
-        System.out.println("User id - "+userForm.getId());
+        logger.info("Save or update by id - " + userForm.getId());
 
         userFormValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()){
+            logger.error("UserForm hasErrors");
             return "user/userForm";
         }
 
         User newUser = userService.saveOrUpdateUserForm(userForm);
 
-        return "redirect:user/show/" + newUser.getId();
-    }
-
-    @RequestMapping("/editForAdmin/{id}")
-    public String edit(@PathVariable Long id, Model model) {
-
-        model.addAttribute("userForm", userToUserForm.convert(userService.getById(id)));
-        return "user/userForm";
-    }
-
-    @RequestMapping("/show/{id}")
-    public String showUser(@PathVariable Long id, Model model){
-        model.addAttribute("user", userService.getById(id));
-        return "user/show";
+        return "redirect:/";
     }
 
     @RequestMapping("/new")
     public String newUser(Model model){
+        logger.info("New user");
+
         model.addAttribute("userForm", new UserForm());
         return "user/userForm";
     }

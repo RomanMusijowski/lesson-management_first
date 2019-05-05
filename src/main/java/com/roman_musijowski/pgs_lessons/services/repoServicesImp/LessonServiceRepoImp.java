@@ -7,7 +7,12 @@ import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.repositories.LessonRepositoryImp;
 import com.roman_musijowski.pgs_lessons.services.LessonService;
 import com.roman_musijowski.pgs_lessons.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +22,8 @@ import java.util.Set;
 
 @Service
 public class LessonServiceRepoImp implements LessonService {
+
+    private static final Logger logger = LoggerFactory.getLogger(LessonServiceRepoImp.class);
 
     private LessonRepositoryImp lessonRepositoryImp;
     private LessonFormToLesson lessonFormToLesson;
@@ -30,7 +37,9 @@ public class LessonServiceRepoImp implements LessonService {
     }
 
     @Override
+    @Cacheable(value = "lessons")
     public List<Lesson> listAll() {
+        logger.info("Get list of lessons");
 
         List<Lesson> lessons = new ArrayList<>();
         lessonRepositoryImp.findAll().forEach(lessons::add);
@@ -38,19 +47,39 @@ public class LessonServiceRepoImp implements LessonService {
     }
 
     @Override
+    @Cacheable(cacheNames = "lessons", key = "#id")
     public Lesson getById(Long id) {
-
+        logger.info("Get lesson - " + id);
         return lessonRepositoryImp.getOne(id);
     }
 
     @Override
+    @Caching(evict =
+            {@CacheEvict(cacheNames = "users", allEntries = true),
+            @CacheEvict(cacheNames = "lessons", allEntries = true)})
     public Lesson saveOrUpdate(Lesson object) {
+        logger.info("Save lesson - " + object.toString());
         return lessonRepositoryImp.save(object);
     }
 
     @Override
+    @CacheEvict(cacheNames = "lessons", allEntries = true)
+    public Lesson saveOrUpdateLessonForm(LessonForm lessonForm) {
+        logger.info("Save lessonForm - " + lessonForm);
+        Lesson newLesson = lessonFormToLesson.convert(lessonForm);
+
+        if (newLesson.getLesson_id() != null){
+            Lesson existingLesson = getById(newLesson.getLesson_id());
+
+            newLesson.setUsers(existingLesson.getUsers());
+        }
+        return saveOrUpdate(newLesson);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "lessons", key = "#id")
     public Lesson deleteById(Long id) {
-        System.out.println("Delete in service");
+        logger.info("Delete lesson - " + id);
 
         Lesson lesson = getById(id);
 
@@ -79,25 +108,14 @@ public class LessonServiceRepoImp implements LessonService {
             }
 
             lessonRepositoryImp.deleteById(id);
-            System.out.println("Lesson deleted!");
-            return lesson;
+
         }catch (NullPointerException e){
-            System.out.println("This lesson have not users");
+            logger.warn("Error get list of users for existing lesson");
+            System.out.println("This lesson have not users" + e);
         }finally {
+
             System.out.println("Lesson deleted");
             return lesson;
         }
-    }
-
-    @Override
-    public Lesson saveOrUpdateLessonForm(LessonForm lessonForm) {
-        Lesson newLesson = lessonFormToLesson.convert(lessonForm);
-
-        if (newLesson.getLesson_id() != null){
-            Lesson existingLesson = getById(newLesson.getLesson_id());
-
-            newLesson.setUsers(existingLesson.getUsers());
-        }
-        return saveOrUpdate(newLesson);
     }
 }

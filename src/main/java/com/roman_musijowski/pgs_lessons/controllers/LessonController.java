@@ -5,6 +5,8 @@ import com.roman_musijowski.pgs_lessons.commands.validators.LessonFormValidator;
 import com.roman_musijowski.pgs_lessons.converters.LessoneToLessonForm;
 import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.services.LessonService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,9 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping(value = "/lesson")
 public class LessonController {
+
+    private static final Logger logger = LoggerFactory.getLogger(LessonController.class);
+
 
     private LessonService lessonService;
     private LessonFormValidator lessonFormValidator;
@@ -35,6 +40,8 @@ public class LessonController {
 
     @RequestMapping("/list")
     public String listLessons(Model model){
+        logger.info("Get list of lessons");
+
         model.addAttribute("lessons", lessonService.listAll());
         return "lesson/list";
     }
@@ -42,18 +49,21 @@ public class LessonController {
 
     @RequestMapping("/show/{id}")
     public String showLesson(@PathVariable Long id, Model model){
+        logger.info("Show by id - " + id);
+
         model.addAttribute("lesson", lessonService.getById(id));
         return "lesson/show";
     }
 
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable Long id){
-        System.out.println("Delete lesson start(id) - " + id);
+        logger.info("Delete by id - " + id);
 
         Lesson lesson = lessonService.getById(id);
 
+
         if (!lesson.getDate().isAfter(LocalDateTime.now())){
-            System.out.println("You can't deleteById this lesson it's too late");
+            logger.info("You can't deleteById this lesson it's too late");
             return "redirect:/lesson/list";
         }else {
             lessonService.deleteById(id);
@@ -63,6 +73,8 @@ public class LessonController {
 
     @RequestMapping("/new")
     public String newLesson(Model model){
+        logger.info("New lesson");
+
         model.addAttribute("lessonForm", new LessonForm());
         return "lesson/lessonForm";
     }
@@ -70,6 +82,7 @@ public class LessonController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String saveOrUpdate(@Valid LessonForm lessonForm, BindingResult bindingResult){
+        logger.info("Save or update");
 
         lessonFormValidator.validate(lessonForm, bindingResult);
 
@@ -84,6 +97,8 @@ public class LessonController {
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
+        logger.info("Edit lesson by id - "+ id);
+
         Lesson lesson = lessonService.getById(id);
         LessonForm lessonForm = lessoneToLessonForm.convert(lesson);
 
