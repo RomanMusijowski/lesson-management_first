@@ -19,8 +19,6 @@ public class LessonFormValidator implements Validator {
     public void validate(Object o, Errors errors) {
 
         LessonForm lessonForm = (LessonForm) o;
-        System.out.println("date int the validator - " + lessonForm.getTitle());
-        System.out.println("date int the validator - " + lessonForm.getDate());
 
 
         if (!lessonForm.getDate().isAfter(LocalDateTime.now())){

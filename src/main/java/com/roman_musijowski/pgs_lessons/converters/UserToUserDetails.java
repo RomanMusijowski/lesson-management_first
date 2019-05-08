@@ -22,8 +22,6 @@ public class UserToUserDetails implements Converter<User, UserDetails> {
             userDetails.setPassword(user.getEncryptedPassword());
             userDetails.setEnabled(user.getEnabled());
 
-            System.out.println("Converter username - "+userDetails.getUsername());
-            System.out.println("Converter password - "+userDetails.getPassword());
 
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
