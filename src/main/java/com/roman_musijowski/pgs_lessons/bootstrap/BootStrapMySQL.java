@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
-@Profile("default")
-public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> {
+@Profile({"dev", "prod"})
+public class BootStrapMySQL implements ApplicationListener<ContextRefreshedEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(DevBootstrap.class);
 
@@ -29,38 +29,20 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     private UserService userService;
 
     @Autowired
-    public DevBootstrap(RoleSevice roleSevice, LessonService lessonService, UserService userService) {
+    public BootStrapMySQL(RoleSevice roleSevice, LessonService lessonService, UserService userService) {
         this.roleSevice = roleSevice;
         this.lessonService = lessonService;
         this.userService = userService;
     }
 
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+    public void onApplicationEvent(ContextRefreshedEvent event) {
         loadUsers();
         loadRoles();
         loadLesson();
         assignUsersToStudentRole();
         assignUsersToAdminRole();
         assignUserToLesson();
-
-        soutLesson();
-    }
-
-    private void soutLesson(){
-        List<User> users = (List<User>) userService.listAll();
-        List<Lesson> lessons = (List<Lesson>) lessonService.listAll();
-
-
-        System.out.println("Sout users - !!!!!!!!!!!!!!!!!!!!");
-        users.forEach(user -> {
-            System.out.println(user.toString());
-        });
-
-        System.out.println("Sout lessons - !!!!!!!!!!!!!!!!!!!!");
-        lessons.forEach(lesson -> {
-            System.out.println(lesson.toString());
-        });
     }
 
     private void assignUserToLesson() {
@@ -132,7 +114,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         studen.setRole("STUDENT");
         roleSevice.saveOrUpdate(studen);
     }
-//
+
     private void loadUsers(){
         logger.info("Load users");
 
