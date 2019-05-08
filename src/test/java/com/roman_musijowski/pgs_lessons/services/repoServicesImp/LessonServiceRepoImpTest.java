@@ -5,8 +5,8 @@ import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.repositories.LessonRepositoryImp;
 import com.roman_musijowski.pgs_lessons.services.UserService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -18,11 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
+
+
+
 public class LessonServiceRepoImpTest {
 
     LessonServiceRepoImp service;
     @Mock
-    LessonRepositoryImp lessonRepositoryImp;
+    LessonRepositoryImp repo;
     @Mock
     UserService userService;
     @Mock
@@ -31,11 +34,11 @@ public class LessonServiceRepoImpTest {
     Lesson lesson;
     User user;
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        service = new LessonServiceRepoImp(userService, lessonRepositoryImp, lessonFormToLesson);
+        service = new LessonServiceRepoImp(userService, repo, lessonFormToLesson);
 
         lesson = new Lesson();
         lesson.setLesson_id(5L);
@@ -57,19 +60,19 @@ public class LessonServiceRepoImpTest {
         lessons.add(lesson);
         lessons.add(lesson);
 
-        when(lessonRepositoryImp.findAll()).thenReturn(lessons);
+        when(repo.findAll()).thenReturn(lessons);
 
         List<Lesson> lessonsNew = service.listAll();
 
         assertNotNull(lessons);
         assertEquals(2, lessons.size());
 
-        verify(lessonRepositoryImp, times(1)).findAll();
+        verify(repo, times(1)).findAll();
     }
 
     @Test
     public void getById() {
-        when(lessonRepositoryImp.getOne(anyLong())).thenReturn(lesson);
+        when(repo.getOne(anyLong())).thenReturn(lesson);
         Lesson lesson = service.getById(5L);
 
         assertNotNull(lesson);
@@ -80,24 +83,25 @@ public class LessonServiceRepoImpTest {
         Lesson saveOrUpdate = new Lesson();
         saveOrUpdate.setLesson_id(3L);
 
-        when(lessonRepositoryImp.save(any())).thenReturn(lesson);
+        when(repo.save(any())).thenReturn(lesson);
 
         Lesson savedLesson = service.saveOrUpdate(saveOrUpdate);
 
         assertNotNull(savedLesson);
-        verify(lessonRepositoryImp).save(any());
+        verify(repo).save(any());
     }
 
     @Test
-    void deleteById() {
+    public void deleteById() {
         Lesson deleteLesson = new Lesson();
         Long id = 3L;
         deleteLesson.setLesson_id(id);
 
-        when(lessonRepositoryImp.getOne(any())).thenReturn(deleteLesson);
+        when(repo.getOne(any())).thenReturn(deleteLesson);
         Lesson actualLesson = service.deleteById(id);
 
-        verify(lessonRepositoryImp, times(1)).getOne(any());
-        verify(lessonRepositoryImp, times(1)).deleteById(anyLong());
+        assertNotNull(actualLesson);
+        verify(repo, times(1)).getOne(any());
+        verify(repo, times(1)).deleteById(anyLong());
     }
 }

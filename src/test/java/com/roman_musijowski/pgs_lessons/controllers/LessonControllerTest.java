@@ -5,8 +5,8 @@ import com.roman_musijowski.pgs_lessons.commands.validators.LessonFormValidator;
 import com.roman_musijowski.pgs_lessons.converters.LessoneToLessonForm;
 import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.services.LessonService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -36,7 +36,7 @@ class LessonControllerTest {
 
     MockMvc mockMvc;
 
-    @BeforeEach
+    @Before
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
@@ -65,7 +65,6 @@ class LessonControllerTest {
     void showLesson() throws Exception {
         Long id = 1L;
 
-        //Tell Mockito stub to return new product for ID 1
         when(lessonService.getById(id)).thenReturn(new Lesson());
 
         mockMvc.perform(get("/lesson/show/1"))
@@ -74,22 +73,36 @@ class LessonControllerTest {
                 .andExpect(model().attribute("lesson", instanceOf(Lesson.class)));
     }
 
-//    @Test
-//    void delete() throws Exception {
-//        LocalDateTime localDateTime = LocalDateTime.of(2025,05,15,18,30);
-//        Long id = 2L;
-//        Lesson lesson = new Lesson();
-//
-//        lesson.setLesson_id(id);
-//        lesson.setDate(localDateTime);
-//        lessonService.saveOrUpdate(lesson);
-//
-//        mockMvc.perform(get("/lesson/delete/2"))
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(view().name("redirect:/lesson/list"));
-//
-//        verify(lessonService, times(1)).deleteById(id);
-//    }
+    @Test
+    void delete() throws Exception {
+        Long id = 1L;
+        String title = "Test title";
+        String description = "Test description";
+        String teacherInfo = "Test teacherInfo";
+        LocalDateTime localDateTime = LocalDateTime.of(2025,05,15,18,30);
+
+
+        Lesson returnLesson = new Lesson();
+        returnLesson.setLesson_id(id);
+        returnLesson.setDescription(description);
+        returnLesson.setTitle(title);
+        returnLesson.setTeacherInfo(teacherInfo);
+        returnLesson.setDate(localDateTime);
+
+        when(lessonService.getById(id)).thenReturn(returnLesson);
+
+        mockMvc.perform(get("/lesson/delete/1")
+                .param("lesson_id", "1")
+                .param("description", description)
+                .param("title", title)
+                .param("teacherInfo", teacherInfo)
+                .param("date", "15-05-2025 18:30"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/lesson/list"));
+
+        verify(lessonService, times(1)).getById(id);
+        verify(lessonService, times(1)).deleteById(id);
+    }
 
     @Test
     void newLesson() throws Exception {
@@ -120,7 +133,7 @@ class LessonControllerTest {
         returnLesson.setDate(localDateTime);
 
 
-        //maybe problem is here nearly"any()"
+
         when(lessonService.saveOrUpdateLessonForm(any(LessonForm.class))).thenReturn(returnLesson);
 
         mockMvc.perform(post("/lesson")

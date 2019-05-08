@@ -5,8 +5,8 @@ import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.repositories.UserRepositoryImp;
 import com.roman_musijowski.pgs_lessons.security.services.EncryptionService;
 import com.roman_musijowski.pgs_lessons.services.RoleSevice;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -33,7 +33,7 @@ class UserServiceRepoImpTest {
 
     User user;
 
-    @BeforeEach
+    @Before
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
@@ -97,6 +97,7 @@ class UserServiceRepoImpTest {
 
     @Test
     void findByUserName() {
+
         when(userRepositoryImp.findByUserName(any())).thenReturn(user);
         User returnedUser = service.findByUserName(USER_NAME);
 

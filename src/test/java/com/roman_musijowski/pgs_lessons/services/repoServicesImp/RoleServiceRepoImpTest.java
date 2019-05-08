@@ -2,8 +2,8 @@ package com.roman_musijowski.pgs_lessons.services.repoServicesImp;
 
 import com.roman_musijowski.pgs_lessons.models.security.Role;
 import com.roman_musijowski.pgs_lessons.repositories.RoleRepositoryImp;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
+
 class RoleServiceRepoImpTest {
 
     RoleServiceRepoImp service;
@@ -22,7 +23,7 @@ class RoleServiceRepoImpTest {
     @Mock
     RoleRepositoryImp roleRepositoryImp;
 
-    @BeforeEach
+    @Before
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
