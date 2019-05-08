@@ -32,7 +32,7 @@ public class User {
     @Column(name = "fieldOfStudy")
     private String fieldOfStudy;
 
-    @Column(name = "index")
+    @Column(name = "person_index")
     private String index;
 
     @Transient
