@@ -53,14 +53,14 @@ public class User {
     @JoinTable(name = "user_lesson",
             joinColumns = {
                 @JoinColumn(
-                    name = "user_id",
+                    name = "userId",
                     referencedColumnName = "id"
                 )
             },
             inverseJoinColumns = {
                 @JoinColumn(
-                    name = "lesson_id",
-                    referencedColumnName = "lesson_id"
+                    name = "lessonId",
+                    referencedColumnName = "lessonId"
                 )
             }
     )
@@ -220,7 +220,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", encryptedPassword='" + encryptedPassword + '\'' +
                 ", roles=" + roles +
-//                ", lessons=" + lessons +
                 '}';
     }
 }

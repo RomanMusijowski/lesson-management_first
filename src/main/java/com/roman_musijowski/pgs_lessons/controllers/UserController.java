@@ -1,8 +1,8 @@
 package com.roman_musijowski.pgs_lessons.controllers;
 
-import com.roman_musijowski.pgs_lessons.commands.UserForm;
-import com.roman_musijowski.pgs_lessons.commands.validators.UserFormValidator;
 import com.roman_musijowski.pgs_lessons.converters.UserToUserForm;
+import com.roman_musijowski.pgs_lessons.forms.UserForm;
+import com.roman_musijowski.pgs_lessons.forms.validators.UserFormValidator;
 import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.services.LessonService;

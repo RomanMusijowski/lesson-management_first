@@ -14,7 +14,7 @@ public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long lesson_id;
+    private Long lessonId;
 
     @Column(name = "title")
     private String title;
@@ -42,12 +42,12 @@ public class Lesson {
         this.date = date;
     }
 
-    public Long getLesson_id() {
-        return lesson_id;
+    public Long getLessonId() {
+        return lessonId;
     }
 
-    public void setLesson_id(Long lesson_id) {
-        this.lesson_id = lesson_id;
+    public void setLessonId(Long lessonId) {
+        this.lessonId = lessonId;
     }
 
     public String getTitle() {
@@ -102,18 +102,18 @@ public class Lesson {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lesson lesson = (Lesson) o;
-        return Objects.equals(lesson_id, lesson.lesson_id);
+        return Objects.equals(lessonId, lesson.lessonId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(lesson_id);
+        return Objects.hash(lessonId);
     }
 
     @Override
     public String toString() {
         return "Lesson{" +
-                "lesson_id=" + lesson_id +
+                "lessonId=" + lessonId +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", teacherInfo='" + teacherInfo + '\'' +

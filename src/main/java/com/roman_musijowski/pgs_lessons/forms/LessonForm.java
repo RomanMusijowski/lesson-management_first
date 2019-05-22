@@ -1,4 +1,4 @@
-package com.roman_musijowski.pgs_lessons.commands;
+package com.roman_musijowski.pgs_lessons.forms;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 public class LessonForm {
 
-    private Long lesson_id;
+    private Long lessonId;
 
     @NotEmpty
     @Size(min = 5, max = 50)
@@ -36,12 +36,12 @@ public class LessonForm {
         this.date = date;
     }
 
-    public Long getLesson_id() {
-        return lesson_id;
+    public Long getLessonId() {
+        return lessonId;
     }
 
-    public void setLesson_id(Long lesson_id) {
-        this.lesson_id = lesson_id;
+    public void setLessonId(Long lessonId) {
+        this.lessonId = lessonId;
     }
 
     public String getTitle() {

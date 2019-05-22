@@ -32,14 +32,14 @@
 
             </tr>
             <tr th:each="lesson : ${lessons}">
-                <td th:text="${lesson.lesson_id}"></td>
+                <td th:text="${lesson.lessonId}"></td>
                 <td th:text="${lesson.title}"></td>
                 <td th:text="${#temporals.format(lesson.date, 'dd-MM-yyyy HH:mm')}"></td>
                 <td th:text="${lesson.description}"></td>
                 <td th:text="${lesson.teacherInfo}"></td>
-                <td><a th:href="${'/lesson/show/' + lesson.lesson_id}">View</a> </td>
-                <td><a th:href="${'/lesson/edit/' + lesson.lesson_id}">Edit</a> </td>
-                <td><a th:href="${'/lesson/delete/' + lesson.lesson_id}">Delete</a> </td>
+                <td><a th:href="${'/lesson/show/' + lesson.lessonId}">View</a> </td>
+                <td><a th:href="${'/lesson/edit/' + lesson.lessonId}">Edit</a> </td>
+                <td><a th:href="${'/lesson/delete/' + lesson.lessonId}">Delete</a> </td>
             </tr>
         </table>
     </div>

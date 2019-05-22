@@ -23,19 +23,4 @@ public class CachingConfig {
         ));
         return cacheManager;
     }
-
-//    @Bean
-//    LessonRepositoryImp myRepoLesson() {
-//        return Mockito.mock(LessonRepositoryImp.class);
-//    }
-//
-//    @Bean
-//    RoleRepositoryImp myRepoRole() {
-//        return Mockito.mock(RoleRepositoryImp.class);
-//    }
-//
-//    @Bean
-//    UserRepositoryImp myRepoUser() {
-//        return Mockito.mock(UserRepositoryImp.class);
-//    }
 }

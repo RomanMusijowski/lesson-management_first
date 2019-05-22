@@ -1,6 +1,7 @@
-package com.roman_musijowski.pgs_lessons.commands;
+package com.roman_musijowski.pgs_lessons.forms;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class UserForm {
 
@@ -17,7 +18,6 @@ public class UserForm {
     @Size(min = 2, max = 36)
     private String surName;
 
-
     private Integer yearOfStudies;
 
     @NotEmpty
@@ -28,10 +28,10 @@ public class UserForm {
     @Size(min = 11, max = 11)
     private String index;
 
-    @NotEmpty
+    @NotEmpty //comment this
     @Size(min = 6, max = 50)
     private String password;
-    @NotEmpty
+    @NotEmpty //maybe it solve problem with changing password
     @Size(min = 6, max = 50)
     private String encryptedPassword;
 

@@ -1,18 +1,19 @@
 package com.roman_musijowski.pgs_lessons.controllers;
 
-import com.roman_musijowski.pgs_lessons.commands.UserForm;
-import com.roman_musijowski.pgs_lessons.commands.validators.UserFormValidator;
 import com.roman_musijowski.pgs_lessons.converters.UserToUserForm;
+import com.roman_musijowski.pgs_lessons.forms.UserForm;
+import com.roman_musijowski.pgs_lessons.forms.validators.UserFormValidator;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.services.LessonService;
 import com.roman_musijowski.pgs_lessons.services.UserService;
 import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -26,35 +27,54 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-class UserControllerTest {
+public class UserControllerTest {
 
     @Mock
     UserService userService;
     @Mock
     LessonService lessonService;
+    @Mock
+    Authentication authentication;
+    @Mock
+    UserToUserForm userToUserForm;
 
     @InjectMocks
     UserController controller;
 
     MockMvc mockMvc;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         controller = new UserController(new UserFormValidator(), userService,
-                 new UserToUserForm(),lessonService);
+                userToUserForm, lessonService);
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
-    @Test
-    void edit() {
 
+
+    @Test
+    public void editForAdmin() throws Exception {
+        User user = new User();
+        UserForm form = new UserForm();
+        Long id = 1L;
+
+
+
+        //Tell Mockito stub to return new product for ID 1
+        when(userService.getById(id)).thenReturn(user);
+        when(userToUserForm.convert(any())).thenReturn(form);
+
+        mockMvc.perform(get("/user/editForAdmin/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/userForm"))
+                .andExpect(model().attribute("userForm", instanceOf(UserForm.class)));
     }
 
     @Test
-    void listUSers() throws Exception {
+    public void listUSers() throws Exception {
         List<User> users = new ArrayList<>();
         users.add(new User());
         users.add(new User());
@@ -69,19 +89,18 @@ class UserControllerTest {
     }
 
     @Test
-    void addLesson() {
+    public void delete() throws Exception {
+        Long id = 1L;
+
+        mockMvc.perform(get("/user/delete/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/user/list"));
+
+        verify(userService, times(1)).deleteById(id);
     }
 
     @Test
-    void removeLesson() {
-    }
-
-    @Test
-    void delete() {
-    }
-
-    @Test
-    void saveOrUpdate() throws Exception {
+    public void saveOrUpdate() throws Exception {
         Long id = 1L;
         String userName = "test@gmail.com";
         String name = "Test description";
@@ -117,7 +136,7 @@ class UserControllerTest {
                 .param("password", password)
                 .param("encryptedPassword", password))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:user/show/1"));
+                .andExpect(view().name("redirect:/"));
 
         ArgumentCaptor<UserForm> userCaptor = ArgumentCaptor.forClass(UserForm.class);
         verify(userService).saveOrUpdateUserForm(userCaptor.capture());
@@ -131,33 +150,7 @@ class UserControllerTest {
     }
 
     @Test
-    void edit1() throws Exception {
-        Long id = 1L;
-
-        //Tell Mockito stub to return new product for ID 1
-        when(userService.getById(id)).thenReturn(new User());
-
-        mockMvc.perform(get("/user/editForAdmin/1"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/userForm"))
-                .andExpect(model().attribute("userForm", instanceOf(UserForm.class)));
-    }
-
-    @Test
-    void showUser() throws Exception {
-        Long id = 1L;
-
-        //Tell Mockito stub to return new product for ID 1
-        when(userService.getById(id)).thenReturn(new User());
-
-        mockMvc.perform(get("/user/show/1"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/show"))
-                .andExpect(model().attribute("user", instanceOf(User.class)));
-    }
-
-    @Test
-    void newUser() throws Exception {
+    public void newUser() throws Exception {
         Long id = 1L;
 
         verifyZeroInteractions(userService);
@@ -166,6 +159,5 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/userForm"))
                 .andExpect(model().attribute("userForm", instanceOf(UserForm.class)));
-
     }
 }

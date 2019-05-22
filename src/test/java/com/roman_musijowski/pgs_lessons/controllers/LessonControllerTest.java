@@ -1,8 +1,8 @@
 package com.roman_musijowski.pgs_lessons.controllers;
 
-import com.roman_musijowski.pgs_lessons.commands.LessonForm;
-import com.roman_musijowski.pgs_lessons.commands.validators.LessonFormValidator;
 import com.roman_musijowski.pgs_lessons.converters.LessoneToLessonForm;
+import com.roman_musijowski.pgs_lessons.forms.LessonForm;
+import com.roman_musijowski.pgs_lessons.forms.validators.LessonFormValidator;
 import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.services.LessonService;
 import org.junit.Before;
@@ -83,7 +83,7 @@ class LessonControllerTest {
 
 
         Lesson returnLesson = new Lesson();
-        returnLesson.setLesson_id(id);
+        returnLesson.setLessonId(id);
         returnLesson.setDescription(description);
         returnLesson.setTitle(title);
         returnLesson.setTeacherInfo(teacherInfo);
@@ -126,7 +126,7 @@ class LessonControllerTest {
 
 
         Lesson returnLesson = new Lesson();
-        returnLesson.setLesson_id(id);
+        returnLesson.setLessonId(id);
         returnLesson.setDescription(description);
         returnLesson.setTitle(title);
         returnLesson.setTeacherInfo(teacherInfo);
@@ -150,7 +150,7 @@ class LessonControllerTest {
         ArgumentCaptor<LessonForm> boundLesson = ArgumentCaptor.forClass(LessonForm.class);
         verify(lessonService).saveOrUpdateLessonForm(boundLesson.capture());
 
-        assertEquals(id, boundLesson.getValue().getLesson_id());
+        assertEquals(id, boundLesson.getValue().getLessonId());
         assertEquals(description, boundLesson.getValue().getDescription());
         assertEquals(title, boundLesson.getValue().getTitle());
         assertEquals(teacherInfo, boundLesson.getValue().getTeacherInfo());

@@ -47,13 +47,13 @@
                 <th>Absent</th>
             </tr>
             <tr th:each="lesson : ${lessons}">
-                <td th:text="${lesson.lesson_id}"></td>
+                <td th:text="${lesson.lessonId}"></td>
                 <td th:text="${lesson.title}"></td>
                 <td th:text="${lesson.description}"></td>
                 <td th:text="${lesson.teacherInfo}"></td>
 
-                <td><a th:href="${'/user/addLesson/' + lesson.lesson_id}">Present</a> </td>
-                <td><a th:href="${'/user/removeLesson/' + lesson.lesson_id}">Absent</a> </td>
+                <td><a th:href="${'/user/addLesson/' + lesson.lessonId}">Present</a> </td>
+                <td><a th:href="${'/user/removeLesson/' + lesson.lessonId}">Absent</a> </td>
             </tr>
         </table>
     </div>

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service("userDetailService")
@@ -16,7 +15,6 @@ public class SpringSecUserDetailsServiceImpl implements UserDetailsService {
 
     private UserService userService;
     private UserToUserDetails userToUserDetails;
-    private PasswordEncoder passwordEncoder;
 
 
     @Autowired
@@ -35,7 +33,7 @@ public class SpringSecUserDetailsServiceImpl implements UserDetailsService {
 
         User user = userService.findByUserName(username);
         if (user == null){
-            throw new UsernameNotFoundException("User Name "+username +" Not Found");
+            throw new UsernameNotFoundException("User Name "+ username +" Not Found");
         }
 
         return userToUserDetails.convert(userService.findByUserName(username));

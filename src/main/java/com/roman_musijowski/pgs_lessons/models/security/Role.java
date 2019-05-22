@@ -13,7 +13,7 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer role_id;
+    private Integer roleId;
 
     @Column(name = "name")
     private String role;
@@ -23,12 +23,12 @@ public class Role {
 
     public Role() { }
 
-    public Integer getRole_id() {
-        return role_id;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(Integer role_id) {
-        this.role_id = role_id;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     public String getRole() {
@@ -68,18 +68,18 @@ public class Role {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
-        return Objects.equals(role_id, role.role_id);
+        return Objects.equals(roleId, role.roleId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(role_id);
+        return Objects.hash(roleId);
     }
 
     @Override
     public String toString() {
         return "Role{" +
-                "role_id=" + role_id +
+                "roleId=" + roleId +
                 ", role='" + role + '\'' +
                 '}';
     }

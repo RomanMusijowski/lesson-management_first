@@ -27,11 +27,11 @@ public class UserToUserDetailsTest {
         String roleName2 = "ADMIN";
 
         Role role1 = new Role();
-        role1.setRole_id(1);
+        role1.setRoleId(1);
         role1.setRole(roleName1);
 
         Role role2 = new Role();
-        role2.setRole_id(2);
+        role2.setRoleId(2);
         role2.setRole(roleName2);
 
         User user = new User();

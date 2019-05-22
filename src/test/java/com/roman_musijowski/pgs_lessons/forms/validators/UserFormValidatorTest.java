@@ -1,6 +1,6 @@
-package com.roman_musijowski.pgs_lessons.commands.validators;
+package com.roman_musijowski.pgs_lessons.forms.validators;
 
-import com.roman_musijowski.pgs_lessons.commands.UserForm;
+import com.roman_musijowski.pgs_lessons.forms.UserForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.validation.BeanPropertyBindingResult;

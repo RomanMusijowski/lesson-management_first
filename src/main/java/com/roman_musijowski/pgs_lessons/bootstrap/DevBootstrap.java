@@ -138,8 +138,8 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
         User admin = new User();
         admin.setUserName("admin@gmail.com");
-        admin.setName("Roman");
-        admin.setSurName("Musiiovskyi");
+        admin.setName("Admin");
+        admin.setSurName("Admin");
         admin.setFieldOfStudy("Informatyka");
         admin.setYearOfStudies(2);
         admin.setIndex("89562312457");

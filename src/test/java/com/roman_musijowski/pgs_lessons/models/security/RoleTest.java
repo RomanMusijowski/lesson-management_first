@@ -23,8 +23,8 @@ public class RoleTest {
     public void getRole_id() {
         Integer role_id = 1;
 
-        role.setRole_id(role_id);
-        assertEquals(role_id,role.getRole_id());
+        role.setRoleId(role_id);
+        assertEquals(role_id,role.getRoleId());
     }
 
     @Test

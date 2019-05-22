@@ -29,7 +29,7 @@ class RoleServiceRepoImpTest {
 
         service = new RoleServiceRepoImp(roleRepositoryImp);
         role = new Role();
-        role.setRole_id(1);
+        role.setRoleId(1);
         role.setRole("ADMIN");
     }
 
@@ -39,7 +39,7 @@ class RoleServiceRepoImpTest {
 
         Role role2 = new Role();
         role2 = new Role();
-        role2.setRole_id(2);
+        role2.setRoleId(2);
         role2.setRole("STUDENT");
 
         roles.add(role);
@@ -66,7 +66,7 @@ class RoleServiceRepoImpTest {
     @Test
     void saveOrUpdate() {
         Role saveOrUpdate = new Role();
-        saveOrUpdate.setRole_id(3);
+        saveOrUpdate.setRoleId(3);
         saveOrUpdate.setRole("Customer");
 
         when(roleRepositoryImp.save(any())).thenReturn(role);
@@ -81,7 +81,7 @@ class RoleServiceRepoImpTest {
     void deleteById() {
         Role deleteRole = new Role();
         Integer id = 3;
-        deleteRole.setRole_id(id);
+        deleteRole.setRoleId(id);
 
         when(roleRepositoryImp.getOne(any())).thenReturn(deleteRole);
         Role actualRole = service.deleteById(Long.valueOf(id));

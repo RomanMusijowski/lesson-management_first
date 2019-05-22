@@ -30,9 +30,9 @@ public class LessonTest {
     @Test
     public void getLesson_id() {
         Long id = 15L;
-        lesson.setLesson_id(id);
+        lesson.setLessonId(id);
 
-        assertEquals(id, lesson.getLesson_id());
+        assertEquals(id, lesson.getLessonId());
     }
 
     @Test

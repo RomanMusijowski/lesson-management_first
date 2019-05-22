@@ -1,7 +1,7 @@
 package com.roman_musijowski.pgs_lessons.services.repoServicesImp;
 
-import com.roman_musijowski.pgs_lessons.commands.LessonForm;
 import com.roman_musijowski.pgs_lessons.converters.LessonFormToLesson;
+import com.roman_musijowski.pgs_lessons.forms.LessonForm;
 import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.repositories.LessonRepositoryImp;
@@ -68,8 +68,8 @@ public class LessonServiceRepoImp implements LessonService {
         logger.info("Save lessonForm - " + lessonForm);
         Lesson newLesson = lessonFormToLesson.convert(lessonForm);
 
-        if (newLesson.getLesson_id() != null){
-            Lesson existingLesson = getById(newLesson.getLesson_id());
+        if (newLesson.getLessonId() != null){
+            Lesson existingLesson = getById(newLesson.getLessonId());
 
             newLesson.setUsers(existingLesson.getUsers());
         }

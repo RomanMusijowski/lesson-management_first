@@ -1,8 +1,8 @@
 package com.roman_musijowski.pgs_lessons.controllers;
 
-import com.roman_musijowski.pgs_lessons.commands.LessonForm;
-import com.roman_musijowski.pgs_lessons.commands.validators.LessonFormValidator;
 import com.roman_musijowski.pgs_lessons.converters.LessoneToLessonForm;
+import com.roman_musijowski.pgs_lessons.forms.LessonForm;
+import com.roman_musijowski.pgs_lessons.forms.validators.LessonFormValidator;
 import com.roman_musijowski.pgs_lessons.models.Lesson;
 import com.roman_musijowski.pgs_lessons.services.LessonService;
 import org.slf4j.Logger;
@@ -92,7 +92,7 @@ public class LessonController {
 
         Lesson newLesson= lessonService.saveOrUpdateLessonForm(lessonForm);
 
-        return "redirect:lesson/show/" + newLesson.getLesson_id();
+        return "redirect:lesson/show/" + newLesson.getLessonId();
     }
 
     @RequestMapping("/edit/{id}")

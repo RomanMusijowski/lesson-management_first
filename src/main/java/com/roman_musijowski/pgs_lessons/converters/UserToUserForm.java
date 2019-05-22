@@ -1,6 +1,6 @@
 package com.roman_musijowski.pgs_lessons.converters;
 
-import com.roman_musijowski.pgs_lessons.commands.UserForm;
+import com.roman_musijowski.pgs_lessons.forms.UserForm;
 import com.roman_musijowski.pgs_lessons.models.User;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

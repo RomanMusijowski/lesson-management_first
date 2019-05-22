@@ -41,7 +41,7 @@ public class LessonServiceRepoImpTest {
         service = new LessonServiceRepoImp(userService, repo, lessonFormToLesson);
 
         lesson = new Lesson();
-        lesson.setLesson_id(5L);
+        lesson.setLessonId(5L);
         lesson.setTitle("Java Spring");
 
         user = new User();
@@ -54,7 +54,7 @@ public class LessonServiceRepoImpTest {
         List<Lesson> lessons = new ArrayList<>();
 
         Lesson lesson = new Lesson();
-        lesson.setLesson_id(2L);
+        lesson.setLessonId(2L);
         lesson.setTitle("Base of git");
 
         lessons.add(lesson);
@@ -81,7 +81,7 @@ public class LessonServiceRepoImpTest {
     @Test
     public void saveOrUpdate() {
         Lesson saveOrUpdate = new Lesson();
-        saveOrUpdate.setLesson_id(3L);
+        saveOrUpdate.setLessonId(3L);
 
         when(repo.save(any())).thenReturn(lesson);
 
@@ -95,7 +95,7 @@ public class LessonServiceRepoImpTest {
     public void deleteById() {
         Lesson deleteLesson = new Lesson();
         Long id = 3L;
-        deleteLesson.setLesson_id(id);
+        deleteLesson.setLessonId(id);
 
         when(repo.getOne(any())).thenReturn(deleteLesson);
         Lesson actualLesson = service.deleteById(id);

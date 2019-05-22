@@ -1,7 +1,7 @@
 package com.roman_musijowski.pgs_lessons.services.repoServicesImp;
 
-import com.roman_musijowski.pgs_lessons.commands.UserForm;
 import com.roman_musijowski.pgs_lessons.converters.UserFormToUser;
+import com.roman_musijowski.pgs_lessons.forms.UserForm;
 import com.roman_musijowski.pgs_lessons.models.User;
 import com.roman_musijowski.pgs_lessons.models.security.Role;
 import com.roman_musijowski.pgs_lessons.repositories.UserRepositoryImp;
@@ -15,11 +15,13 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceRepoImp implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceRepoImp.class);
@@ -103,7 +105,6 @@ public class UserServiceRepoImp implements UserService {
     }
 
     @Override
-//    @CacheEvict(cacheNames = "users", key = "#id")
     @CacheEvict(cacheNames = "users", allEntries = true)
     public User deleteById(Long id) {
 
@@ -123,14 +124,6 @@ public class UserServiceRepoImp implements UserService {
     public User findByUserName(String userName) {
         logger.info("Find by userName user - " + userName);
 
-        User user = userRepositoryImp.findByUserName(userName);
-        return user;
+        return userRepositoryImp.findByUserName(userName);
     }
-
-
-//    @Override
-//    public User findByEmail(String email) {
-//        return userRepositoryImp.findByEmail(email);
-//    }
-
 }
